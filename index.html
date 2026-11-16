@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Azeem Ahmad | Personal Brand</title>
+
+<style>
+/* ===== Global Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f9fafc;
+    color: #333;
+    scroll-behavior: smooth;
+}
+
+/* ===== Navbar ===== */
+nav {
+    position: fixed;
+    width: 100%;
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+nav.scrolled {
+    background: white;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+nav h1 {
+    color: #4f46e5;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 25px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: #0022ff;
+}
+
+/* ===== Hero Section ===== */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: linear-gradient(135deg, #4f46e5, #9333ea);
+    color: white;
+    padding: 0 20px;
+}
+
+.hero h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background: white;
+    color: #4f46e5;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #ddd;
+}
+
+/* ===== Sections ===== */
+section {
+    padding: 80px 10%;
+    text-align: center;
+}
+
+.features {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.card {
+    flex: 1 1 30%;
+    background: white;
+    margin: 15px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* ===== Contact Section ===== */
+.contact form {
+    max-width: 500px;
+    margin: auto;
+}
+
+.contact input,
+.contact textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.contact button {
+    width: 100%;
+    background: #4f46e5;
+    color: white;
+}
+
+/* ===== Footer ===== */
+footer {
+    background: #111827;
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+/* ===== Responsive ===== */
+@media(max-width: 768px) {
+    .features {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<nav id="navbar">
+    <h1>Azeem Ahmad</h1>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#expertise">Expertise</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div>
+        <h2>Hi, I'm Azeem Ahmad</h2>
+        <p>Computer Science Student | Developer | Tech Enthusiast</p>
+        <button class="btn" onclick="scrollToSection('about')">
+            Discover More
+        </button>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+    <h2>About Me</h2>
+    <p style="max-width: 750px; margin: 25px auto; line-height: 1.8;">
+        I'm Azeem Ahmad, a Computer Science student passionate about
+        technology, software development, and artificial intelligence.
+        I enjoy exploring new technologies, solving problems, and turning
+        ideas into practical digital experiences.
+    </p>
+</section>
+
+<!-- Expertise Section -->
+<section id="expertise">
+    <h2>What I Do</h2>
+    <div class="features">
+
+        <div class="card">
+            <h3>Software Development</h3>
+            <p>
+                Building practical applications and exploring modern
+                technologies to create useful digital solutions.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Artificial Intelligence</h3>
+            <p>
+                Exploring machine learning, AI technologies, and
+                intelligent systems to understand the future of technology.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Continuous Learning</h3>
+            <p>
+                Constantly learning, experimenting, and improving my
+                technical skills through projects and hands-on experience.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <h2>Let's Connect</h2>
+    <p style="margin: 20px 0;">
+        Have an idea, project, or opportunity? I'd love to hear from you.
+    </p>
+
+    <form onsubmit="handleSubmit(event)">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button class="btn">Send Message</button>
+    </form>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>© 2026 Azeem Ahmad. All rights reserved.</p>
+</footer>
+
+<script>
+// Navbar background on scroll
+window.addEventListener("scroll", function() {
+    const nav = document.getElementById("navbar");
+    nav.classList.toggle("scrolled", window.scrollY > 50);
+});
+
+// Smooth scroll
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+}
+
+// Contact form handler
+function handleSubmit(e) {
+    e.preventDefault();
+    alert("Thank you for reaching out! I'll get back to you soon.");
+}
+</script>
+
+</body>
+</html>
+```
