@@ -102,14 +102,10 @@ export function SettingsModal({
               <Key className="h-4 w-4 text-primary" />
               <span>Bring Your Own Key (BYOK)</span>
             </div>
-            {apiKey ? (
+            {apiKey && (
               <Badge variant="success" className="text-[10px]">
                 <CheckCircle2 className="h-3 w-3 mr-1" />
                 Live Key Active
-              </Badge>
-            ) : (
-              <Badge variant="outline" className="text-[10px]">
-                Portfolio Mode
               </Badge>
             )}
           </div>

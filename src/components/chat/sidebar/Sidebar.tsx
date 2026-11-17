@@ -149,9 +149,6 @@ export function Sidebar({
                 <span className="font-serif text-sm font-medium text-ink truncate tracking-tight">
                   Azeem Ahmad
                 </span>
-                <span className="text-[10px] text-muted truncate">
-                  Portfolio Assistant
-                </span>
               </div>
             </div>
           )}
@@ -370,9 +367,6 @@ export function Sidebar({
                 <div className="truncate">
                   <div className="text-xs font-medium text-ink truncate">
                     Azeem Ahmad
-                  </div>
-                  <div className="text-[10px] text-muted truncate">
-                    Online &bull; Verified Portfolio
                   </div>
                 </div>
               </div>

@@ -1,6 +1,5 @@
 import * as React from "react";
 import { FolderGit2, GraduationCap, Cpu, Mail, ArrowUpRight } from "lucide-react";
-import { SpikeMark } from "@/components/ui/SpikeMark";
 
 export interface PromptSuggestion {
   id: string;
@@ -48,12 +47,6 @@ export interface WelcomeScreenProps {
 export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-full my-auto px-3.5 sm:px-4 py-6 sm:py-8 max-w-3xl mx-auto w-full text-center">
-      {/* Brand Badge */}
-      <div className="mb-3.5 sm:mb-4 inline-flex items-center gap-2 rounded-full border border-hairline bg-surface-card px-3 py-1 text-xs font-medium text-ink transition-colors">
-        <SpikeMark className="h-3.5 w-3.5 text-primary" />
-        <span>Grounded AI Portfolio Assistant</span>
-      </div>
-
       {/* Main Editorial Headline */}
       <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-normal tracking-[-0.03em] text-ink leading-tight transition-colors">
         Hi, I'm <span className="text-primary">Azeem Ahmad</span>

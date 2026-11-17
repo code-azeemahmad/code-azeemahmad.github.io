@@ -100,11 +100,6 @@ export function ChatComposer({
           </div>
         </div>
       </form>
-
-      {/* Grounding Disclaimer */}
-      <div className="mt-1.5 sm:mt-2 text-center text-[10px] sm:text-[11px] text-muted-soft px-2">
-        Grounded portfolio answers are factual and source-referenced. Live responses powered by BYOK streaming.
-      </div>
     </div>
   );
 }

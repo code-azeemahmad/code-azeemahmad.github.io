@@ -227,9 +227,7 @@ export function ChatApplication() {
         <ChatHeader
           title={
             activeConversation?.title ||
-            `Azeem Ahmad • ${
-              apiKey ? `Live AI (${currentProviderConfig.name})` : "Portfolio Assistant"
-            }`
+            (apiKey ? `Azeem Ahmad • Live AI (${currentProviderConfig.name})` : "Azeem Ahmad")
           }
           hasMessages={messages.length > 0}
           isLiveAIEnabled={!!apiKey.trim()}

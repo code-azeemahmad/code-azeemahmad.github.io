@@ -146,7 +146,7 @@ export function exportConversationAsMarkdown(conversation: Conversation): void {
   ];
 
   conversation.messages.forEach((msg) => {
-    const speaker = msg.role === "user" ? "**User**" : "**Portfolio Assistant**";
+    const speaker = msg.role === "user" ? "**User**" : "**Assistant**";
     lines.push(`${speaker}:`);
     lines.push(``);
     lines.push(msg.content);

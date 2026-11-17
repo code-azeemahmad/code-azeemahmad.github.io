@@ -27,7 +27,7 @@ export interface ChatHeaderProps {
 }
 
 export function ChatHeader({
-  title = "Portfolio Assistant",
+  title = "Azeem Ahmad",
   hasMessages = false,
   onOpenMobileMenu,
   onNewChat,
@@ -60,17 +60,15 @@ export function ChatHeader({
           <span className="font-serif text-sm sm:text-base font-medium text-ink truncate tracking-tight">
             {title}
           </span>
-          <Badge
-            variant={isLiveAIEnabled ? "coral" : "default"}
-            className="hidden sm:inline-flex text-[11px] shrink-0"
-          >
-            <span
-              className={`h-1.5 w-1.5 rounded-full ${
-                isLiveAIEnabled ? "bg-white" : "bg-[#5db8a6]"
-              }`}
-            />
-            {isLiveAIEnabled ? "Live AI Active" : "Portfolio Mode"}
-          </Badge>
+          {isLiveAIEnabled && (
+            <Badge
+              variant="coral"
+              className="hidden sm:inline-flex text-[11px] shrink-0"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              Live AI Active
+            </Badge>
+          )}
         </div>
       </div>
 

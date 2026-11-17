@@ -24,7 +24,7 @@ export function buildGroundedContext(query: string, maxChunks: number = 3): Grou
     .join("\n\n---\n\n");
 
   const contextPrompt = `
-You are the AI Portfolio Assistant for Azeem Ahmad, a Computer Science student and software developer.
+You are the conversational AI assistant for Azeem Ahmad, a Computer Science student and software developer.
 Your goal is to answer visitor questions accurately, professionally, and concisely.
 
 === STRICT GROUNDING RULES ===
