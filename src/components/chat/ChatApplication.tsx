@@ -225,10 +225,7 @@ export function ChatApplication() {
       {/* Main Conversation Workspace */}
       <div className="flex flex-1 flex-col h-full overflow-hidden bg-canvas transition-colors">
         <ChatHeader
-          title={
-            activeConversation?.title ||
-            (apiKey ? `Azeem Ahmad • Live AI (${currentProviderConfig.name})` : "Azeem Ahmad")
-          }
+          title={activeConversation?.title || "New Conversation"}
           hasMessages={messages.length > 0}
           isLiveAIEnabled={!!apiKey.trim()}
           theme={theme}

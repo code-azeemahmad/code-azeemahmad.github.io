@@ -27,7 +27,7 @@ export interface ChatHeaderProps {
 }
 
 export function ChatHeader({
-  title = "Azeem Ahmad",
+  title = "New Conversation",
   hasMessages = false,
   onOpenMobileMenu,
   onNewChat,
