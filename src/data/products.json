@@ -1,0 +1,28 @@
+[
+  {
+    "id": "conversational-portfolio-platform",
+    "name": "Conversational AI Portfolio Engine",
+    "description": "An open-source static template for software engineers to present their portfolio as an interactive ChatGPT-style assistant.",
+    "audience": "Developers, technical creators, and computer science students",
+    "contribution": "Core creator and open-source maintainer",
+    "features": [
+      "Zero-backend static GitHub Pages compatibility",
+      "Local in-browser conversation persistence",
+      "BYOK privacy model for direct client-to-provider AI requests"
+    ],
+    "status": "active",
+    "website": "https://azeemahmad.me",
+    "documentation": "https://github.com/code-azeemahmad/code-azeemahmad.github.io"
+  },
+  {
+    "id": "product-placeholder-2",
+    "name": "[PLACEHOLDER: Product Name]",
+    "description": "[PLACEHOLDER: Product description]",
+    "audience": "[PLACEHOLDER: Target audience]",
+    "contribution": "[PLACEHOLDER: Contribution details]",
+    "features": ["[PLACEHOLDER: Key feature 1]", "[PLACEHOLDER: Key feature 2]"],
+    "status": "idea",
+    "website": "[PLACEHOLDER: Website URL]",
+    "documentation": "[PLACEHOLDER: Documentation URL]"
+  }
+]

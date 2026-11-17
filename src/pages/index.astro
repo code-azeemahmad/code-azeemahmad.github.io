@@ -1,0 +1,10 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { ChatApplication } from '../components/chat/ChatApplication';
+---
+
+<Layout title="Azeem Ahmad | AI Portfolio">
+  <main class="h-screen w-full overflow-hidden">
+    <ChatApplication client:load />
+  </main>
+</Layout>

@@ -1,0 +1,33 @@
+[
+  {
+    "id": "ai-portfolio",
+    "name": "Conversational AI Portfolio",
+    "summary": "A ChatGPT-inspired interactive portfolio featuring client-side retrieval and optional BYOK live LLM capabilities.",
+    "problem": "Traditional portfolios are static and passive, making it tedious for recruiters and clients to find specific information quickly.",
+    "solution": "Built a static-first web app with Astro, React islands, and a browser-side retrieval pipeline that allows conversational exploration of skills, background, and projects.",
+    "role": "Lead Architect and Developer",
+    "technologies": ["Astro", "React", "TypeScript", "Tailwind CSS", "Client-side RAG"],
+    "outcomes": [
+      "Sub-second initial page load with 100% static output for GitHub Pages",
+      "Interactive conversational interface without requiring an API key for portfolio exploration"
+    ],
+    "repository": "https://github.com/code-azeemahmad/code-azeemahmad.github.io",
+    "demo": "https://azeemahmad.me",
+    "status": "active",
+    "featured": true
+  },
+  {
+    "id": "project-placeholder-2",
+    "name": "[PLACEHOLDER: Project Name]",
+    "summary": "[PLACEHOLDER: Project summary describing what was built]",
+    "problem": "[PLACEHOLDER: Problem statement addressed by the project]",
+    "solution": "[PLACEHOLDER: Solution architecture and implementation details]",
+    "role": "[PLACEHOLDER: Role, e.g. Full-Stack Developer]",
+    "technologies": ["[PLACEHOLDER: Tech 1]", "[PLACEHOLDER: Tech 2]"],
+    "outcomes": ["[PLACEHOLDER: Measurable result or outcome]"],
+    "repository": "[PLACEHOLDER: GitHub Repository URL]",
+    "demo": "[PLACEHOLDER: Live Demo URL]",
+    "status": "completed",
+    "featured": false
+  }
+]

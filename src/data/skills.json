@@ -1,0 +1,91 @@
+[
+  {
+    "id": "languages",
+    "category": "Programming Languages",
+    "skills": [
+      {
+        "name": "TypeScript",
+        "evidence": "Applied across the static portfolio codebase with strict compiler configuration",
+        "tags": ["frontend", "typing", "web"]
+      },
+      {
+        "name": "JavaScript (ES6+)",
+        "evidence": "Modern web development and asynchronous application logic",
+        "tags": ["web", "core"]
+      },
+      {
+        "name": "Python",
+        "evidence": "Academic coursework, AI exploration, and scripting",
+        "tags": ["ai", "backend", "scripting"]
+      },
+      {
+        "name": "HTML5 & CSS3",
+        "evidence": "Responsive web layouts, semantic markup, and modern CSS architecture",
+        "tags": ["web", "ui"]
+      }
+    ]
+  },
+  {
+    "id": "frameworks",
+    "category": "Frameworks & Libraries",
+    "skills": [
+      {
+        "name": "React",
+        "evidence": "Component-driven architecture, custom hooks, and state management",
+        "tags": ["frontend", "ui"]
+      },
+      {
+        "name": "Astro",
+        "evidence": "Static site generation, island architecture, and content collections",
+        "tags": ["ssg", "performance"]
+      },
+      {
+        "name": "Tailwind CSS",
+        "evidence": "Design token system, responsive utility styling, and custom themes",
+        "tags": ["styling", "design"]
+      }
+    ]
+  },
+  {
+    "id": "ai-skills",
+    "category": "Artificial Intelligence & RAG",
+    "skills": [
+      {
+        "name": "Conversational AI Architecture",
+        "evidence": "Interactive assistant workflows, streaming interfaces, and client-side RAG",
+        "tags": ["ai", "architecture"]
+      },
+      {
+        "name": "LLM Provider Integration",
+        "evidence": "BYOK client-side connectivity (OpenAI, Gemini, Anthropic)",
+        "tags": ["ai", "api"]
+      },
+      {
+        "name": "Information Retrieval",
+        "evidence": "Fuzzy keyword indexing, context bounding, and citation attribution",
+        "tags": ["rag", "search"]
+      }
+    ]
+  },
+  {
+    "id": "tools",
+    "category": "Developer Tools & Platforms",
+    "skills": [
+      {
+        "name": "Git & GitHub",
+        "evidence": "Version control, feature branching, and GitHub Actions CI/CD",
+        "tags": ["tooling", "devops"]
+      },
+      {
+        "name": "Linux / Bash",
+        "evidence": "Development environment navigation, script automation, and tooling",
+        "tags": ["os", "cli"]
+      },
+      {
+        "name": "GitHub Pages",
+        "evidence": "Static deployment, custom domain DNS mapping, and automated release pipeline",
+        "tags": ["deployment", "hosting"]
+      }
+    ]
+  }
+]

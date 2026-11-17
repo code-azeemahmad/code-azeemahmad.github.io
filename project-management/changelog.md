@@ -1,0 +1,14 @@
+# Changelog
+
+Record notable user-visible changes, architecture changes, and release milestones. Keep entries newest first.
+
+## Unreleased
+- Initial documentation baseline created.
+- Phase 1 (Project Foundation): Configured Astro static project, React 19 integration, TypeScript strict setup, Tailwind CSS v4, and verified static build output.
+- Legacy portfolio archived to `legacy/index.html` and custom domain `azeemahmad.me` configured for `dist/CNAME`.
+- Phase 2 (UI/UX Foundation): Built ChatGPT-inspired design system tokens, accessible UI primitives (Button, Badge, Dialog), responsive Sidebar and MobileDrawer, ChatHeader, WelcomeScreen with suggested prompt cards, ChatComposer with auto-resizing textarea, BYOK SettingsModal, and full message copy/loading states.
+- Phase 3 (Portfolio Content & Featured Conversations): Defined TypeScript content schemas, populated structured JSON data models and synchronized Markdown knowledge files, created 6 immutable featured chat templates with verified dialogue and suggested follow-ups, and wired template loading directly into the chat workspace without requiring an API key.
+- Phase 4 (Conversation Management & Message Interface): Implemented Markdown rendering with GitHub Flavored Markdown (tables, blockquotes, lists, safe link protocol validation), code block copy-to-clipboard, schema-versioned localStorage persistence, auto-generated titles, real-time search across conversations, rename/delete dialogs, clear all confirmation, and dual format conversation export (Markdown and JSON).
+- Phase 5/6 (Client-side RAG & Retrieval Pipeline): Built deterministic knowledge chunking from structured portfolio data, configured Fuse.js for in-browser fuzzy search with category intent and token stemming, built prompt-injection safe context builder, implemented offline grounded responder with verified facts, added interactive source citation links to message items, and established automated RAG evaluation test suite achieving 10/10 (100% precision).
+- Phase 7 (Live AI Integration & BYOK): Added browser-compatible direct streaming adapters for Google Gemini, OpenAI, Groq, and Anthropic Claude via native SSE, implemented in-memory BYOK key management with full privacy disclosures and zero-secret static build guarantees, added real-time token streaming with AbortController cancellation, and built seamless fallback to local grounded RAG when no key is entered.
+- Phase 8 & 9 (Quality, Hardening & GitHub Pages Deployment): Built unit & security test runner (`storage.test.ts`, `security.test.ts`, `provider.test.ts`, `rag-evaluation.test.ts`), added custom 404 page (`404.astro`), configured automated GitHub Actions workflow (`.github/workflows/deploy.yml`) for static GitHub Pages deployment, completed accessibility reviews, and verified 100% test pass rate and static builds.

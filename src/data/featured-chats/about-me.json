@@ -1,0 +1,23 @@
+{
+  "id": "about-me",
+  "title": "About Azeem Ahmad",
+  "description": "Background, education, and career aspirations",
+  "category": "About",
+  "messages": [
+    {
+      "id": "about-msg-1",
+      "role": "user",
+      "content": "Tell me about Azeem Ahmad's background, studies, and focus areas."
+    },
+    {
+      "id": "about-msg-2",
+      "role": "assistant",
+      "content": "Azeem Ahmad is a Computer Science student and software developer passionate about building practical digital solutions and exploring modern technology.\n\nHis primary focus areas include:\n- **Software Development**: Crafting responsive, accessible web applications with TypeScript, React, Astro, and Tailwind CSS.\n- **Artificial Intelligence**: Investigating modern LLM capabilities, prompt workflows, and browser-first retrieval-augmented generation (RAG).\n- **Continuous Learning**: Deepening knowledge in computer science algorithms, system design, and emerging web standards.\n\nHe is enthusiastic about turning complex concepts into clean, functional digital experiences."
+    }
+  ],
+  "suggestedQuestions": [
+    "What technologies are you currently exploring?",
+    "What kind of roles or collaborations are you seeking?",
+    "Tell me about your academic studies."
+  ]
+}

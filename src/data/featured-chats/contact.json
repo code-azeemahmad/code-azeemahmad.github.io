@@ -1,0 +1,23 @@
+{
+  "id": "contact",
+  "title": "Contact & Links",
+  "description": "How to get in touch, connect on social platforms, or discuss opportunities",
+  "category": "Contact",
+  "messages": [
+    {
+      "id": "contact-msg-1",
+      "role": "user",
+      "content": "How can I contact Azeem or connect for collaboration and opportunities?"
+    },
+    {
+      "id": "contact-msg-2",
+      "role": "assistant",
+      "content": "Azeem is open to discussions about software development opportunities, open-source collaboration, and technology projects:\n\n- **Website**: [azeemahmad.me](https://azeemahmad.me)\n- **GitHub**: [github.com/code-azeemahmad](https://github.com/code-azeemahmad)\n- **LinkedIn**: [PLACEHOLDER: LinkedIn Profile URL]\n- **Email**: [PLACEHOLDER: Email Address]\n\nFeel free to explore the repository on GitHub or check back as more direct contact channels are verified."
+    }
+  ],
+  "suggestedQuestions": [
+    "What kind of opportunities are you interested in?",
+    "Where is the source code for this website?",
+    "Are you available for freelance projects?"
+  ]
+}

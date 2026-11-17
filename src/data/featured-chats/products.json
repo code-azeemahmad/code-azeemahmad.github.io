@@ -1,0 +1,23 @@
+{
+  "id": "products",
+  "title": "Products & Platforms",
+  "description": "Digital products, open-source templates, and software solutions",
+  "category": "Products",
+  "messages": [
+    {
+      "id": "prod-msg-1",
+      "role": "user",
+      "content": "What products or open-source software has Azeem created or contributed to?"
+    },
+    {
+      "id": "prod-msg-2",
+      "role": "assistant",
+      "content": "Azeem's primary open-source product initiative is the **Conversational AI Portfolio Engine**:\n\n- **Product**: Conversational AI Portfolio Engine\n- **Audience**: Software engineers, tech creators, and CS students looking for a modern alternative to traditional CV sites.\n- **Key Features**:\n  1. Fully static architecture optimized for free, zero-config deployment on GitHub Pages.\n  2. Browser-native persistence preserving conversation history without user tracking or backend databases.\n  3. Bring-Your-Own-Key (BYOK) privacy model enabling live AI responses via direct browser-to-provider API calls.\n- **Status**: Active and maintained at `https://github.com/code-azeemahmad/code-azeemahmad.github.io`."
+    }
+  ],
+  "suggestedQuestions": [
+    "How does the BYOK privacy model protect API keys?",
+    "Can other developers clone this portfolio?",
+    "What features are roadmap priorities?"
+  ]
+}

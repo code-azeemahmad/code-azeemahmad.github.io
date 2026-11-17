@@ -1,0 +1,37 @@
+[
+  {
+    "id": "exp-student-developer",
+    "role": "Independent Software Developer & Student",
+    "organization": "Independent / University Studies",
+    "startDate": "2024",
+    "endDate": "Present",
+    "location": "[PLACEHOLDER: Location]",
+    "responsibilities": [
+      "Designing and building modern web applications with focus on usability and performance",
+      "Investigating and applying conversational AI and browser-first retrieval techniques",
+      "Continuously improving skills through open-source development and computer science coursework"
+    ],
+    "outcomes": [
+      "Built and deployed high-performance static conversational portfolio on azeemahmad.me"
+    ],
+    "technologies": ["TypeScript", "React", "Astro", "Tailwind CSS", "Git"],
+    "referenceUrl": "https://azeemahmad.me"
+  },
+  {
+    "id": "exp-placeholder-2",
+    "role": "[PLACEHOLDER: Role Title, e.g. Software Engineer Intern]",
+    "organization": "[PLACEHOLDER: Organization / Company]",
+    "startDate": "[PLACEHOLDER: Start Date]",
+    "endDate": "[PLACEHOLDER: End Date]",
+    "location": "[PLACEHOLDER: Location]",
+    "responsibilities": [
+      "[PLACEHOLDER: Verified responsibility 1]",
+      "[PLACEHOLDER: Verified responsibility 2]"
+    ],
+    "outcomes": [
+      "[PLACEHOLDER: Verified outcome or metric]"
+    ],
+    "technologies": ["[PLACEHOLDER: Technologies used]"],
+    "referenceUrl": "[PLACEHOLDER: Reference URL]"
+  }
+]

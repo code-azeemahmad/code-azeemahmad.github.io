@@ -1,0 +1,20 @@
+[
+  {
+    "id": "edu-cs-degree",
+    "qualification": "Bachelor of Science in Computer Science",
+    "institution": "[PLACEHOLDER: University / College Name]",
+    "startDate": "[PLACEHOLDER: Start Year]",
+    "endDate": "[PLACEHOLDER: Expected Graduation Year]",
+    "details": "Focus on software engineering, data structures, algorithms, and artificial intelligence fundamentals.",
+    "referenceUrl": "[PLACEHOLDER: University URL]"
+  },
+  {
+    "id": "edu-cert-placeholder",
+    "qualification": "[PLACEHOLDER: Certification or Coursework]",
+    "institution": "[PLACEHOLDER: Issuing Organization]",
+    "startDate": "[PLACEHOLDER: Date]",
+    "endDate": "[PLACEHOLDER: Date]",
+    "details": "[PLACEHOLDER: Verification details and credential link]",
+    "referenceUrl": "[PLACEHOLDER: Credential URL]"
+  }
+]

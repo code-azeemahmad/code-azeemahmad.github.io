@@ -1,0 +1,23 @@
+{
+  "id": "projects",
+  "title": "Software Projects",
+  "description": "Exploration of architectures, technical stacks, and solutions built",
+  "category": "Projects",
+  "messages": [
+    {
+      "id": "proj-msg-1",
+      "role": "user",
+      "content": "What software projects has Azeem built and what technologies were used?"
+    },
+    {
+      "id": "proj-msg-2",
+      "role": "assistant",
+      "content": "Azeem has engineered several web and AI applications, with a key highlight being the **Conversational AI Portfolio**:\n\n- **Project**: Conversational AI Portfolio (`azeemahmad.me`)\n- **Problem**: Traditional portfolio websites are static and passive, requiring manual navigation to find answers.\n- **Solution**: Developed a static-first ChatGPT-style application built with Astro and React islands. It features client-side retrieval across portfolio documents and optional BYOK live LLM connectivity.\n- **Tech Stack**: Astro, React 19, TypeScript, Tailwind CSS v4, Lucide React, and client-side RAG.\n- **Key Outcomes**: 100% static output for GitHub Pages, zero server-side maintenance, and instantaneous exploration of portfolio facts without requiring an API key.\n\nAdditional verified software projects will be cataloged as they are published to his GitHub profile."
+    }
+  ],
+  "suggestedQuestions": [
+    "What challenges were solved during the AI portfolio build?",
+    "Where can I find the GitHub repository?",
+    "What other projects are planned?"
+  ]
+}

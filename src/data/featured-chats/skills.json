@@ -1,0 +1,23 @@
+{
+  "id": "skills",
+  "title": "Technical Skills & Stack",
+  "description": "Programming languages, frameworks, AI tools, and development platforms",
+  "category": "Skills",
+  "messages": [
+    {
+      "id": "skills-msg-1",
+      "role": "user",
+      "content": "What are Azeem's core technical skills, programming languages, and tools?"
+    },
+    {
+      "id": "skills-msg-2",
+      "role": "assistant",
+      "content": "Azeem's technical skill set spans frontend engineering, modern web standards, and conversational AI tools:\n\n- **Languages**: TypeScript, JavaScript (ES6+), Python, HTML5, CSS3\n- **Frameworks & UI**: React, Astro (Static Site Generation), Tailwind CSS v4, Lucide React\n- **AI & Retrieval**: Prompt engineering, Conversational AI architecture, Client-side RAG, LLM provider connectivity (OpenAI, Gemini, Anthropic)\n- **Developer Tools**: Git, GitHub, GitHub Pages, Linux / Bash, npm, Vite\n- **Engineering Values**: Strict typing, accessible semantic HTML (WCAG AA), responsive mobile-first design, and clean architecture."
+    }
+  ],
+  "suggestedQuestions": [
+    "What is your preferred tech stack for web apps?",
+    "How do you implement client-side RAG?",
+    "What are you currently learning?"
+  ]
+}

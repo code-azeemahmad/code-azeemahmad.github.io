@@ -1,0 +1,17 @@
+{
+  "name": "Azeem Ahmad",
+  "headline": "Computer Science Student | Developer | Tech Enthusiast",
+  "shortBio": "A Computer Science student passionate about technology, software development, and artificial intelligence, focused on building practical digital solutions.",
+  "fullBio": "I'm Azeem Ahmad, a Computer Science student passionate about technology, software development, and artificial intelligence. I enjoy exploring new technologies, solving problems, and turning ideas into practical digital experiences.",
+  "focusAreas": [
+    "Software Development",
+    "Artificial Intelligence",
+    "Continuous Learning"
+  ],
+  "location": "[PLACEHOLDER: Location]",
+  "email": "[PLACEHOLDER: Email Address]",
+  "website": "https://azeemahmad.me",
+  "github": "https://github.com/code-azeemahmad",
+  "linkedin": "[PLACEHOLDER: LinkedIn Profile URL]",
+  "resumeUrl": "[PLACEHOLDER: Resume PDF Link]"
+}

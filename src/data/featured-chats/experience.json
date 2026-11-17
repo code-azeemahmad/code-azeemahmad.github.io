@@ -1,0 +1,23 @@
+{
+  "id": "experience",
+  "title": "Professional Experience",
+  "description": "Technical roles, responsibilities, and engineering outcomes",
+  "category": "Experience",
+  "messages": [
+    {
+      "id": "exp-msg-1",
+      "role": "user",
+      "content": "What is Azeem's professional experience and work history?"
+    },
+    {
+      "id": "exp-msg-2",
+      "role": "assistant",
+      "content": "Azeem is an active independent software developer while pursuing his Bachelor of Science in Computer Science:\n\n- **Role**: Independent Software Developer & Student (2024 — Present)\n- **Core Focus**: Developing performant frontend applications, mastering strict TypeScript architectures, and implementing client-side AI integration.\n- **Outcomes**: Engineered and deployed the static AI portfolio on his custom domain (`azeemahmad.me`), demonstrating proficiency with Astro, React islands, and responsive design systems.\n\nFormal industry roles and internship experiences will be added with verified outcomes and metrics as they are confirmed."
+    }
+  ],
+  "suggestedQuestions": [
+    "What engineering methodologies do you follow?",
+    "Are you available for internships or freelance work?",
+    "What coursework has been completed?"
+  ]
+}
