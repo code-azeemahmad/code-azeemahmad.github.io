@@ -12,6 +12,9 @@ import {
 export function useConversationManager() {
   const [conversations, setConversations] = React.useState<Conversation[]>([]);
   const [activeConversationId, setActiveConversationId] = React.useState<string | null>(null);
+  const activeConversationIdRef = React.useRef<string | null>(activeConversationId);
+  activeConversationIdRef.current = activeConversationId;
+
   const [searchQuery, setSearchQuery] = React.useState("");
   const [isInitialized, setIsInitialized] = React.useState(false);
 
@@ -22,6 +25,7 @@ export function useConversationManager() {
 
     setConversations(storedConversations);
     setActiveConversationId(storedActiveId);
+    activeConversationIdRef.current = storedActiveId;
     setIsInitialized(true);
   }, []);
 
@@ -53,66 +57,58 @@ export function useConversationManager() {
     );
   }, [savedConversations, searchQuery]);
 
-  const startNewConversation = React.useCallback((): string => {
-    // 1. Idempotency: If currently active conversation is already empty, stay on it!
-    if (
-      activeConversation &&
-      activeConversation.messages.length === 0 &&
-      !activeConversation.isFeaturedFork
-    ) {
-      return activeConversation.id;
+  /**
+   * Idempotent New Conversation handler:
+   * If already on the new conversation page (no active chat or chat with 0 messages),
+   * stays on the page without creating redundant empty chats.
+   */
+  const startNewConversation = React.useCallback((): string | null => {
+    const currentId = activeConversationIdRef.current;
+    if (!currentId) {
+      return null;
     }
 
-    // 2. Redundancy: If an empty conversation draft already exists, activate and reuse it
-    const existingEmpty = conversations.find(
-      (c) => c.messages.length === 0 && !c.isFeaturedFork
+    const currentActive = conversations.find((c) => c.id === currentId);
+    if (currentActive && currentActive.messages.length === 0 && !currentActive.isFeaturedFork) {
+      return currentId;
+    }
+
+    // Switch to clean new conversation page and prune any empty drafts
+    activeConversationIdRef.current = null;
+    setActiveConversationId(null);
+    setConversations((prev) =>
+      prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork)
     );
-    if (existingEmpty) {
-      setActiveConversationId(existingEmpty.id);
-      return existingEmpty.id;
-    }
+    return null;
+  }, [conversations]);
 
-    // 3. Otherwise create a single new conversation and prune any empty ones
-    const id = `conv-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    const newConv: Conversation = {
-      id,
-      title: "New Conversation",
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      messages: [],
-    };
-
-    setConversations((prev) => [
-      newConv,
-      ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
-    ]);
-    setActiveConversationId(id);
-    return id;
-  }, [activeConversation, conversations]);
-
+  /**
+   * Idempotent Featured Template Fork handler:
+   * Reuses existing unmodified forks of the same template rather than creating duplicates.
+   */
   const forkFeaturedTemplate = React.useCallback(
     (template: FeaturedChatTemplate): string => {
-      // 1. Idempotency: If currently active conversation is an unmodified fork of this template, stay on it!
+      const currentId = activeConversationIdRef.current;
+      const currentActive = conversations.find((c) => c.id === currentId);
       if (
-        activeConversation &&
-        activeConversation.featuredTopicId === template.id &&
-        activeConversation.messages.length === template.messages.length
+        currentActive &&
+        currentActive.featuredTopicId === template.id &&
+        currentActive.messages.length === template.messages.length
       ) {
-        return activeConversation.id;
+        return currentActive.id;
       }
 
-      // 2. Redundancy: If an unmodified fork of this template already exists in conversations, activate it
       const existingFork = conversations.find(
         (c) =>
           c.featuredTopicId === template.id &&
           c.messages.length === template.messages.length
       );
       if (existingFork) {
+        activeConversationIdRef.current = existingFork.id;
         setActiveConversationId(existingFork.id);
         return existingFork.id;
       }
 
-      // 3. Otherwise create a fresh fork and prune any empty drafts
       const id = `fork-${template.id}-${Date.now()}`;
       const forkedMessages: ChatMessage[] = template.messages.map((m, idx) => ({
         id: `msg-${Date.now()}-${idx}`,
@@ -131,17 +127,20 @@ export function useConversationManager() {
         featuredTopicId: template.id,
       };
 
+      activeConversationIdRef.current = id;
+      setActiveConversationId(id);
       setConversations((prev) => [
         newConv,
         ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
       ]);
-      setActiveConversationId(id);
       return id;
     },
-    [activeConversation, conversations]
+    [conversations]
   );
 
   const selectConversation = React.useCallback((id: string) => {
+    if (activeConversationIdRef.current === id) return;
+    activeConversationIdRef.current = id;
     setActiveConversationId(id);
   }, []);
 
@@ -163,24 +162,19 @@ export function useConversationManager() {
 
   const deleteConversation = React.useCallback(
     (id: string) => {
-      setConversations((prev) => {
-        const updated = prev.filter((c) => c.id !== id);
-        return updated;
-      });
-
-      setActiveConversationId((currentActiveId) => {
-        if (currentActiveId === id) {
-          return null;
-        }
-        return currentActiveId;
-      });
+      setConversations((prev) => prev.filter((c) => c.id !== id));
+      if (activeConversationIdRef.current === id) {
+        activeConversationIdRef.current = null;
+        setActiveConversationId(null);
+      }
     },
     []
   );
 
   const clearAllConversations = React.useCallback(() => {
-    setConversations([]);
+    activeConversationIdRef.current = null;
     setActiveConversationId(null);
+    setConversations([]);
   }, []);
 
   const addMessageToActive = React.useCallback(
@@ -191,48 +185,52 @@ export function useConversationManager() {
         timestamp: Date.now(),
       };
 
-      setConversations((prev) => {
-        // If there's an active conversation, append to it
-        if (activeConversationId) {
-          const exists = prev.some((c) => c.id === activeConversationId);
-          if (exists) {
-            return prev.map((c) => {
-              if (c.id === activeConversationId) {
-                const isFirstUserMessage =
-                  c.messages.length === 0 && newMsg.role === "user";
-                const title =
-                  isFirstUserMessage && c.title === "New Conversation"
-                    ? generateConversationTitle(newMsg.content)
-                    : c.title;
+      // Determine or assign the active conversation ID atomically
+      let targetConvId = activeConversationIdRef.current;
 
-                return {
-                  ...c,
-                  title,
-                  updatedAt: Date.now(),
-                  messages: [...c.messages, newMsg],
-                };
-              }
-              return c;
-            });
-          }
+      if (!targetConvId) {
+        targetConvId = `conv-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+        activeConversationIdRef.current = targetConvId;
+        setActiveConversationId(targetConvId);
+      }
+
+      setConversations((prev) => {
+        const exists = prev.some((c) => c.id === targetConvId);
+        if (exists) {
+          return prev.map((c) => {
+            if (c.id === targetConvId) {
+              const isFirstUserMessage =
+                c.messages.length === 0 && newMsg.role === "user";
+              const title =
+                isFirstUserMessage && c.title === "New Conversation"
+                  ? generateConversationTitle(newMsg.content)
+                  : c.title;
+
+              return {
+                ...c,
+                title,
+                updatedAt: Date.now(),
+                messages: [...c.messages, newMsg],
+              };
+            }
+            return c;
+          });
         }
 
-        // Otherwise create a new conversation immediately
-        const newId = `conv-${Date.now()}`;
+        // If it doesn't exist yet in prev, create it with this message
         const initialTitle =
           newMsg.role === "user"
             ? generateConversationTitle(newMsg.content)
             : "New Conversation";
 
         const newConv: Conversation = {
-          id: newId,
+          id: targetConvId!,
           title: initialTitle,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           messages: [newMsg],
         };
 
-        setActiveConversationId(newId);
         return [
           newConv,
           ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
@@ -241,14 +239,17 @@ export function useConversationManager() {
 
       return newMsg;
     },
-    [activeConversationId]
+    []
   );
 
   const updateAssistantMessage = React.useCallback(
     (messageId: string, content: string) => {
+      const activeId = activeConversationIdRef.current;
+      if (!activeId) return;
+
       setConversations((prev) =>
         prev.map((c) => {
-          if (c.id === activeConversationId) {
+          if (c.id === activeId) {
             return {
               ...c,
               updatedAt: Date.now(),
@@ -261,20 +262,22 @@ export function useConversationManager() {
         })
       );
     },
-    [activeConversationId]
+    []
   );
 
   const exportActiveConversation = React.useCallback(
     (format: "json" | "markdown") => {
-      if (!activeConversation) return;
+      const activeId = activeConversationIdRef.current;
+      const currentActive = conversations.find((c) => c.id === activeId);
+      if (!currentActive || currentActive.messages.length === 0) return;
 
       if (format === "json") {
-        exportConversationAsJson(activeConversation);
+        exportConversationAsJson(currentActive);
       } else {
-        exportConversationAsMarkdown(activeConversation);
+        exportConversationAsMarkdown(currentActive);
       }
     },
-    [activeConversation]
+    [conversations]
   );
 
   return {
