@@ -58,6 +58,18 @@ Phase 8 & 9: Quality, Hardening & GitHub Pages Deployment (Completed & Verified)
 - Built themed `404.astro` error page with navigation back to chat workspace.
 - Configured automated GitHub Actions deployment workflow in `.github/workflows/deploy.yml` with `upload-pages-artifact@v3` and `deploy-pages@v4`.
 - Updated `docs/08-deployment/github-pages.md` with verified release checklist items.
+- Overhauled visual design to match Anthropic Claude warm editorial design system (`DESIGN.md`):
+  - Cream/parchment light theme (`#faf9f5`) and deep charcoal dark theme (`#181715`).
+  - Dark/Light mode switcher toggle with dark theme as default, persisted in `localStorage`.
+  - Scaled typography by +1px (`17px` desktop base, `16px` mobile, `15px` message text).
+- Performed end-to-end mobile responsiveness hardening across all screens:
+  - Fixed mobile drawer conflict by removing duplicate close button and synchronizing top-right close action.
+  - Implemented smooth CSS slide-in/out transitions and backdrop opacity fades.
+  - Resolved flex centering clipping on short mobile screens using `min-h-full my-auto`.
+  - Added dynamic viewport height (`100dvh`) support to prevent mobile address bar overlap.
+  - Added safe area padding (`env(safe-area-inset-bottom)`) for iOS notched devices.
+  - Optimized touch targets, message bubble widths, and header title truncation on narrow 320px–375px viewports.
+  - Tested and deployed to live production custom domain `https://azeemahmad.me`.
 - Authored production-ready `README.md` with architecture details, quick start commands, testing instructions, deployment guidelines, and security policies.
 - Verified static build generates `dist/index.html`, `dist/404.html`, `dist/CNAME`, and assets with 0 errors.
 
