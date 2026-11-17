@@ -71,10 +71,15 @@ Phase 8 & 9: Quality, Hardening & GitHub Pages Deployment (Completed & Verified)
   - Optimized touch targets, message bubble widths, and header title truncation on narrow 320px–375px viewports.
   - Tested and deployed to live production custom domain `https://azeemahmad.me`.
 - Authored production-ready `README.md` with architecture details, quick start commands, testing instructions, deployment guidelines, and security policies.
+- Implemented permanent preloaded portfolio chats and storage protection:
+  - Canonical portfolio conversations (About Azeem Ahmad, Software Projects, Professional Experience, Technical Skills & Stack, Products & Platforms, Contact & Links) are derived from source-controlled featured chat templates and automatically seeded on initialization or when storage is cleared.
+  - Preloaded chats are marked with `isPreloaded: true` and cannot be deleted or renamed (action buttons hidden in sidebar and header, actions blocked in state manager).
+  - Clearing conversation history clears only custom visitor-created chats, retaining all preloaded portfolio chats.
+  - Rule 8 compliant: Continuing a preloaded chat automatically forks it into a visitor-owned conversation without mutating the preloaded template.
 - Verified static build generates `dist/index.html`, `dist/404.html`, `dist/CNAME`, and assets with 0 errors.
 
 ## In progress
-- Ready for final commit and push to remote repository.
+- None.
 
 ## Blocked
 - None.
@@ -83,12 +88,11 @@ Phase 8 & 9: Quality, Hardening & GitHub Pages Deployment (Completed & Verified)
 - Replace remaining explicit placeholders in `src/data/` and `src/content/portfolio/` when additional verified achievements are available.
 
 ## Latest verification
-- Diagnostics check (`astro check`): Passed (0 errors, 0 warnings, 0 hints across 39 files).
+- Diagnostics check (`astro check`): Passed (0 errors, 0 warnings, 0 hints across 41 files).
 - Type check (`tsc --noEmit`): Passed (0 errors).
-- Automated test suite (`npm test`): Passed (28/28 tests across all test suites, 100% pass rate).
-- Production build (`npm run build`): Passed (2 pages generated in `dist/` in 678ms).
+- Automated test suite (`npm test`): Passed (32/32 tests across all test suites, 100% pass rate).
+- Production build (`npm run build`): Passed (2 pages generated in `dist/` in 582ms).
 - Secret scan: Passed (zero private credentials or keys present in build assets).
-- Build (`npm run build`): Passed (1 static page generated in `dist/index.html` at 33KB with static assets in `dist/_astro/` and `dist/CNAME`).
-- Deployment: GitHub Pages static build verified locally.
+- Deployment: Live production verified at `https://azeemahmad.me`.
 
 Update this file only with work that has actually been completed and verified.
