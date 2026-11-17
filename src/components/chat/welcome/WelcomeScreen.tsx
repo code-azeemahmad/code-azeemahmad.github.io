@@ -48,11 +48,11 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-full my-auto px-3.5 sm:px-4 py-6 sm:py-8 max-w-3xl mx-auto w-full text-center">
       {/* Profile Avatar */}
-      <div className="mb-5 sm:mb-6">
+      <div className="mb-4 sm:mb-6">
         <img
           src="/azeempic.jpeg"
           alt="Azeem Ahmad"
-          className="h-44 w-44 sm:h-[240px] sm:w-[240px] rounded-full object-cover object-[40%_20%] border-[3px] border-primary shadow-lg"
+          className="h-36 w-36 sm:h-60 sm:w-60 rounded-full object-cover object-[40%_20%] border-2 sm:border-[3px] border-primary shadow-lg"
           loading="eager"
         />
       </div>
