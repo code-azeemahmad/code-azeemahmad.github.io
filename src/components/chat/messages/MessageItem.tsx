@@ -28,20 +28,20 @@ export function MessageItem({ message }: MessageItemProps) {
       <div
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-semibold border ${
           isUser
-            ? "bg-[#efe9de] text-[#141413] border-[#e6dfd8] shadow-xs"
-            : "bg-[#efe9de] text-[#cc785c] border-[#e6dfd8] shadow-xs"
+            ? "bg-surface-card text-ink border-hairline shadow-xs"
+            : "bg-surface-card text-primary border-hairline shadow-xs"
         }`}
         aria-hidden="true"
       >
-        {isUser ? <User className="h-4 w-4" /> : <SpikeMark className="h-4 w-4 text-[#cc785c]" />}
+        {isUser ? <User className="h-4 w-4" /> : <SpikeMark className="h-4 w-4 text-primary" />}
       </div>
 
       {/* Message Content Bubble */}
       <div
         className={`relative max-w-[88%] sm:max-w-[82%] rounded-xl px-4.5 py-3.5 text-sm transition-all shadow-xs ${
           isUser
-            ? "border border-[#e6dfd8] bg-[#efe9de] text-[#141413]"
-            : "border border-[#e6dfd8] bg-[#faf9f5] text-[#3d3d3a]"
+            ? "border border-hairline bg-surface-card text-ink"
+            : "border border-hairline bg-canvas text-body"
         }`}
       >
         {isUser ? (
@@ -52,9 +52,9 @@ export function MessageItem({ message }: MessageItemProps) {
 
         {/* Source References & Citations */}
         {!isUser && message.citations && message.citations.length > 0 && (
-          <div className="mt-3.5 border-t border-[#e6dfd8] pt-2.5">
-            <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#6c6a64] mb-2 uppercase tracking-wider">
-              <Bookmark className="h-3 w-3 text-[#cc785c]" />
+          <div className="mt-3.5 border-t border-hairline pt-2.5">
+            <div className="flex items-center gap-1.5 text-[11px] font-medium text-muted mb-2 uppercase tracking-wider">
+              <Bookmark className="h-3 w-3 text-primary" />
               <span>Referenced Sources</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -71,10 +71,10 @@ export function MessageItem({ message }: MessageItemProps) {
                           rel: "noopener noreferrer",
                         }
                       : {})}
-                    className="inline-flex items-center gap-1 rounded-full border border-[#e6dfd8] bg-[#efe9de] px-2.5 py-1 text-[11px] text-[#141413] hover:bg-[#e8e0d2] hover:border-[#d4cbbe] transition-colors"
+                    className="inline-flex items-center gap-1 rounded-full border border-hairline bg-surface-card px-2.5 py-1 text-[11px] text-ink hover:bg-surface-cream-strong transition-colors"
                   >
                     <span className="truncate max-w-[180px]">{citation.title}</span>
-                    {isLink && <ExternalLink className="h-2.5 w-2.5 text-[#cc785c]" />}
+                    {isLink && <ExternalLink className="h-2.5 w-2.5 text-primary" />}
                   </Component>
                 );
               })}
@@ -84,7 +84,7 @@ export function MessageItem({ message }: MessageItemProps) {
 
         {/* Assistant Footer */}
         {!isUser && (
-          <div className="mt-2.5 flex items-center justify-between border-t border-[#e6dfd8] pt-2 text-[11px] text-[#8e8b82]">
+          <div className="mt-2.5 flex items-center justify-between border-t border-hairline pt-2 text-[11px] text-muted-soft">
             <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#5db8a6]" />
               <span>Grounded in portfolio</span>
@@ -92,7 +92,7 @@ export function MessageItem({ message }: MessageItemProps) {
 
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-1 text-[#8e8b82] hover:text-[#cc785c] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 text-muted-soft hover:text-primary transition-colors cursor-pointer"
               aria-label="Copy assistant response"
             >
               {copied ? (

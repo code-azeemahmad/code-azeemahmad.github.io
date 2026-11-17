@@ -10,6 +10,7 @@ import { SpikeMark } from "@/components/ui/SpikeMark";
 import { ArrowRight } from "lucide-react";
 import { getFeaturedChatById } from "@/data";
 import { useConversationManager } from "@/hooks/useConversationManager";
+import { useTheme } from "@/hooks/useTheme";
 import { executeChatStream } from "@/lib/ai/chatOrchestrator";
 import { SUPPORTED_PROVIDERS, type LLMProviderId } from "@/lib/ai/types";
 
@@ -19,6 +20,9 @@ export function ChatApplication() {
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+
+  // Theme hook: default is dark, persisted in localStorage
+  const { theme, toggleTheme } = useTheme();
 
   // In-memory BYOK provider credentials
   const [selectedProvider, setSelectedProvider] = React.useState<LLMProviderId>("gemini");
@@ -160,7 +164,7 @@ export function ChatApplication() {
   const currentProviderConfig = SUPPORTED_PROVIDERS[selectedProvider];
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-[#faf9f5] text-[#141413] antialiased font-sans">
+    <div className="flex h-screen w-full overflow-hidden bg-canvas text-ink antialiased font-sans transition-colors">
       {/* Desktop Collapsible Sidebar */}
       <div className="hidden md:flex md:shrink-0">
         <Sidebar
@@ -180,6 +184,8 @@ export function ChatApplication() {
           onDeleteConversation={deleteConversation}
           onClearAll={clearAllConversations}
           onOpenSettings={() => setIsSettingsOpen(true)}
+          theme={theme}
+          onToggleTheme={toggleTheme}
         />
       </div>
 
@@ -209,12 +215,14 @@ export function ChatApplication() {
             setIsMobileDrawerOpen(false);
             setIsSettingsOpen(true);
           }}
+          theme={theme}
+          onToggleTheme={toggleTheme}
           className="w-full border-r-0"
         />
       </MobileDrawer>
 
       {/* Main Conversation Workspace */}
-      <div className="flex flex-1 flex-col h-full overflow-hidden bg-[#faf9f5]">
+      <div className="flex flex-1 flex-col h-full overflow-hidden bg-canvas transition-colors">
         <ChatHeader
           title={
             activeConversation?.title ||
@@ -224,6 +232,8 @@ export function ChatApplication() {
           }
           hasMessages={messages.length > 0}
           isLiveAIEnabled={!!apiKey.trim()}
+          theme={theme}
+          onToggleTheme={toggleTheme}
           onOpenMobileMenu={() => setIsMobileDrawerOpen(true)}
           onNewChat={handleNewChat}
           onOpenSettings={() => setIsSettingsOpen(true)}
@@ -271,12 +281,12 @@ export function ChatApplication() {
 
               {isLoading && !messages[messages.length - 1]?.content && (
                 <div className="flex items-start gap-3.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#efe9de] border border-[#e6dfd8] text-[#cc785c] shadow-xs">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-surface-card border border-hairline text-primary shadow-xs">
                     <SpikeMark className="h-4 w-4" />
                   </div>
-                  <div className="rounded-xl border border-[#e6dfd8] bg-[#efe9de] px-4 py-3 text-sm text-[#6c6a64] shadow-xs">
+                  <div className="rounded-xl border border-hairline bg-surface-card px-4 py-3 text-sm text-muted shadow-xs">
                     <span className="inline-flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-[#cc785c] animate-pulse" />
+                      <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                       <span>
                         {apiKey
                           ? `Streaming live response from ${currentProviderConfig.name}...`
@@ -290,7 +300,7 @@ export function ChatApplication() {
               {/* Follow-up suggestions from active template */}
               {activeTemplate && activeTemplate.suggestedQuestions && (
                 <div className="pt-3">
-                  <div className="text-[11px] font-medium text-[#6c6a64] mb-2 uppercase tracking-wider">
+                  <div className="text-[11px] font-medium text-muted mb-2 uppercase tracking-wider">
                     Suggested Questions
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -298,10 +308,10 @@ export function ChatApplication() {
                       <button
                         key={i}
                         onClick={() => handleSendMessage(question)}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-[#e6dfd8] bg-[#efe9de] px-3 py-1.5 text-xs text-[#141413] hover:bg-[#e8e0d2] hover:border-[#d4cbbe] transition-colors cursor-pointer text-left shadow-xs font-normal"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-hairline bg-surface-card px-3 py-1.5 text-xs text-ink hover:bg-surface-cream-strong transition-colors cursor-pointer text-left shadow-xs font-normal"
                       >
                         <span>{question}</span>
-                        <ArrowRight className="h-3 w-3 text-[#cc785c]" />
+                        <ArrowRight className="h-3 w-3 text-primary" />
                       </button>
                     ))}
                   </div>
@@ -335,6 +345,8 @@ export function ChatApplication() {
         }}
         onClearKey={() => setApiKey("")}
         onClearHistory={clearAllConversations}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
     </div>
   );

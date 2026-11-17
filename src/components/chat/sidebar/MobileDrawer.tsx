@@ -39,17 +39,17 @@ export function MobileDrawer({ isOpen, onClose, children }: MobileDrawerProps) {
     >
       {/* Warm tinted backdrop */}
       <div
-        className="fixed inset-0 bg-[#141413]/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Drawer panel */}
-      <div className="relative z-10 flex h-full w-72 max-w-[85vw] flex-col bg-[#f5f0e8] border-r border-[#e6dfd8] shadow-2xl transition-transform text-[#141413]">
+      <div className="relative z-10 flex h-full w-72 max-w-[85vw] flex-col bg-surface-soft border-r border-hairline shadow-2xl transition-transform text-ink">
         <div className="absolute right-2 top-3 z-20">
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-[#e6dfd8] bg-[#faf9f5] text-[#6c6a64] hover:bg-[#efe9de] hover:text-[#141413] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cc785c]/30"
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-hairline bg-canvas text-muted hover:bg-surface-card hover:text-ink cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 transition-colors"
             aria-label="Close navigation sidebar"
           >
             <X className="h-4 w-4" />
