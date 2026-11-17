@@ -364,7 +364,7 @@ export function Sidebar({
                 <img
                   src="/azeempic.jpeg"
                   alt="Azeem Ahmad"
-                  className="h-7 w-7 shrink-0 rounded-full object-cover border border-primary"
+                  className="h-7 w-7 shrink-0 rounded-full object-cover object-[40%_20%] border border-primary"
                 />
                 <div className="truncate">
                   <div className="text-xs font-medium text-ink truncate">
@@ -406,7 +406,7 @@ export function Sidebar({
               <img
                 src="/azeempic.jpeg"
                 alt="Azeem Ahmad"
-                className="h-7 w-7 shrink-0 rounded-full object-cover border border-primary mb-0.5"
+                className="h-7 w-7 shrink-0 rounded-full object-cover object-[40%_20%] border border-primary mb-0.5"
                 title="Azeem Ahmad"
               />
               {onToggleTheme && (
