@@ -35,17 +35,44 @@ export function useConversationManager() {
     return conversations.find((c) => c.id === activeConversationId) || null;
   }, [conversations, activeConversationId]);
 
-  const filteredConversations = React.useMemo(() => {
-    if (!searchQuery.trim()) return conversations;
-    const query = searchQuery.toLowerCase();
+  const savedConversations = React.useMemo(() => {
+    // Only display conversations that have actual messages or are featured template forks
     return conversations.filter(
+      (c) => c.messages.length > 0 || c.isFeaturedFork
+    );
+  }, [conversations]);
+
+  const filteredConversations = React.useMemo(() => {
+    const list = savedConversations;
+    if (!searchQuery.trim()) return list;
+    const query = searchQuery.toLowerCase();
+    return list.filter(
       (c) =>
         c.title.toLowerCase().includes(query) ||
         c.messages.some((m) => m.content.toLowerCase().includes(query))
     );
-  }, [conversations, searchQuery]);
+  }, [savedConversations, searchQuery]);
 
   const startNewConversation = React.useCallback((): string => {
+    // 1. Idempotency: If currently active conversation is already empty, stay on it!
+    if (
+      activeConversation &&
+      activeConversation.messages.length === 0 &&
+      !activeConversation.isFeaturedFork
+    ) {
+      return activeConversation.id;
+    }
+
+    // 2. Redundancy: If an empty conversation draft already exists, activate and reuse it
+    const existingEmpty = conversations.find(
+      (c) => c.messages.length === 0 && !c.isFeaturedFork
+    );
+    if (existingEmpty) {
+      setActiveConversationId(existingEmpty.id);
+      return existingEmpty.id;
+    }
+
+    // 3. Otherwise create a single new conversation and prune any empty ones
     const id = `conv-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
     const newConv: Conversation = {
       id,
@@ -55,13 +82,37 @@ export function useConversationManager() {
       messages: [],
     };
 
-    setConversations((prev) => [newConv, ...prev]);
+    setConversations((prev) => [
+      newConv,
+      ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
+    ]);
     setActiveConversationId(id);
     return id;
-  }, []);
+  }, [activeConversation, conversations]);
 
   const forkFeaturedTemplate = React.useCallback(
     (template: FeaturedChatTemplate): string => {
+      // 1. Idempotency: If currently active conversation is an unmodified fork of this template, stay on it!
+      if (
+        activeConversation &&
+        activeConversation.featuredTopicId === template.id &&
+        activeConversation.messages.length === template.messages.length
+      ) {
+        return activeConversation.id;
+      }
+
+      // 2. Redundancy: If an unmodified fork of this template already exists in conversations, activate it
+      const existingFork = conversations.find(
+        (c) =>
+          c.featuredTopicId === template.id &&
+          c.messages.length === template.messages.length
+      );
+      if (existingFork) {
+        setActiveConversationId(existingFork.id);
+        return existingFork.id;
+      }
+
+      // 3. Otherwise create a fresh fork and prune any empty drafts
       const id = `fork-${template.id}-${Date.now()}`;
       const forkedMessages: ChatMessage[] = template.messages.map((m, idx) => ({
         id: `msg-${Date.now()}-${idx}`,
@@ -80,11 +131,14 @@ export function useConversationManager() {
         featuredTopicId: template.id,
       };
 
-      setConversations((prev) => [newConv, ...prev]);
+      setConversations((prev) => [
+        newConv,
+        ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
+      ]);
       setActiveConversationId(id);
       return id;
     },
-    []
+    [activeConversation, conversations]
   );
 
   const selectConversation = React.useCallback((id: string) => {
@@ -140,24 +194,27 @@ export function useConversationManager() {
       setConversations((prev) => {
         // If there's an active conversation, append to it
         if (activeConversationId) {
-          return prev.map((c) => {
-            if (c.id === activeConversationId) {
-              const isFirstUserMessage =
-                c.messages.length === 0 && newMsg.role === "user";
-              const title =
-                isFirstUserMessage && c.title === "New Conversation"
-                  ? generateConversationTitle(newMsg.content)
-                  : c.title;
+          const exists = prev.some((c) => c.id === activeConversationId);
+          if (exists) {
+            return prev.map((c) => {
+              if (c.id === activeConversationId) {
+                const isFirstUserMessage =
+                  c.messages.length === 0 && newMsg.role === "user";
+                const title =
+                  isFirstUserMessage && c.title === "New Conversation"
+                    ? generateConversationTitle(newMsg.content)
+                    : c.title;
 
-              return {
-                ...c,
-                title,
-                updatedAt: Date.now(),
-                messages: [...c.messages, newMsg],
-              };
-            }
-            return c;
-          });
+                return {
+                  ...c,
+                  title,
+                  updatedAt: Date.now(),
+                  messages: [...c.messages, newMsg],
+                };
+              }
+              return c;
+            });
+          }
         }
 
         // Otherwise create a new conversation immediately
@@ -176,7 +233,10 @@ export function useConversationManager() {
         };
 
         setActiveConversationId(newId);
-        return [newConv, ...prev];
+        return [
+          newConv,
+          ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
+        ];
       });
 
       return newMsg;

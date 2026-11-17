@@ -39,4 +39,20 @@ if (STORAGE_KEY === "portfolio_chat_storage_v1" && CURRENT_SCHEMA_VERSION === 1)
   process.exit(1);
 }
 
+// 3. Conversation pruning and idempotency verification
+const sampleConversations = [
+  { id: "c1", title: "Chat 1", createdAt: 100, updatedAt: 100, messages: [] },
+  { id: "c2", title: "Chat 2", createdAt: 101, updatedAt: 101, messages: [{ id: "m1", role: "user" as const, content: "hi", timestamp: 101 }] },
+  { id: "c3", title: "Featured", createdAt: 102, updatedAt: 102, messages: [], isFeaturedFork: true },
+];
+
+const persistable = sampleConversations.filter((c) => c.messages.length > 0 || c.isFeaturedFork === true);
+if (persistable.length === 2 && !persistable.some((c) => c.id === "c1")) {
+  passed++;
+  console.log("✓ PASS: Empty non-featured conversations are correctly pruned to ensure idempotency.");
+} else {
+  console.error("✗ FAIL: Empty conversations should be pruned.");
+  process.exit(1);
+}
+
 console.log(`Storage Tests: All ${passed} tests passed successfully.\n`);

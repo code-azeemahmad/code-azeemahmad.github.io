@@ -14,7 +14,7 @@ function validateSchema(data: unknown): ConversationStorageSchema | null {
   if (typeof candidate.version !== "number") return null;
   if (!Array.isArray(candidate.conversations)) return null;
 
-  // Sanitize conversations
+  // Sanitize conversations and prune abandoned empty conversations
   const validConversations: Conversation[] = candidate.conversations.filter(
     (c): c is Conversation =>
       c !== null &&
@@ -22,7 +22,8 @@ function validateSchema(data: unknown): ConversationStorageSchema | null {
       typeof c.id === "string" &&
       typeof c.title === "string" &&
       typeof c.createdAt === "number" &&
-      Array.isArray(c.messages)
+      Array.isArray(c.messages) &&
+      (c.messages.length > 0 || c.isFeaturedFork === true)
   );
 
   return {
@@ -84,10 +85,17 @@ export function saveStoredConversations(
   if (typeof window === "undefined") return false;
 
   try {
+    // Only persist non-empty conversations or featured forks to avoid storage pollution and ghost chats
+    const persistable = conversations.filter(
+      (c) => c.messages.length > 0 || c.isFeaturedFork === true
+    );
+
     const payload: ConversationStorageSchema = {
       version: CURRENT_SCHEMA_VERSION,
-      activeConversationId,
-      conversations,
+      activeConversationId: persistable.some((c) => c.id === activeConversationId)
+        ? activeConversationId
+        : null,
+      conversations: persistable,
       updatedAt: Date.now(),
     };
 
