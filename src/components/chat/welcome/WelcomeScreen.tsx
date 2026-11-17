@@ -52,7 +52,7 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
         <img
           src="/azeempic.jpeg"
           alt="Azeem Ahmad"
-          className="h-36 w-36 sm:h-60 sm:w-60 rounded-full object-cover object-[40%_20%] border-2 sm:border-[3px] border-primary shadow-lg"
+          className="h-33 w-33 sm:h-60 sm:w-60 rounded-full object-cover object-[40%_20%] border-2 sm:border-[3px] border-primary shadow-lg"
           loading="eager"
         />
       </div>
@@ -62,7 +62,7 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
         Hi, I'm <span className="text-primary">Azeem Ahmad</span>
       </h1>
       <p className="mt-2 text-xs sm:text-base font-normal text-body tracking-normal transition-colors">
-        Computer Science Student &bull; Developer &bull; Tech Enthusiast
+        Computer Science Student &bull; AI Engineer &bull; Tech Enthusiast
       </p>
 
       {/* Description */}
