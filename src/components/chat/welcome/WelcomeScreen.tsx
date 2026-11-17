@@ -48,11 +48,11 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-full my-auto px-3.5 sm:px-4 py-6 sm:py-8 max-w-3xl mx-auto w-full text-center">
       {/* Profile Avatar */}
-      <div className="mb-4 sm:mb-5">
+      <div className="mb-5 sm:mb-6">
         <img
           src="/azeempic.jpeg"
           alt="Azeem Ahmad"
-          className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover border-2 border-primary shadow-md"
+          className="h-44 w-44 sm:h-[240px] sm:w-[240px] rounded-full object-cover border-[3px] border-primary shadow-lg"
           loading="eager"
         />
       </div>
@@ -90,11 +90,11 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
                 <ArrowUpRight className="h-3.5 w-3.5 text-muted-soft transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
               </div>
 
-              <div className="mt-2 sm:mt-2.5">
-                <div className="font-serif text-sm sm:text-base font-medium text-ink tracking-tight transition-colors">
+              <div className="mt-2.5 sm:mt-3">
+                <div className="font-serif text-lg sm:text-xl font-medium text-ink tracking-tight transition-colors">
                   {item.title}
                 </div>
-                <div className="text-[11px] sm:text-xs text-muted line-clamp-2 mt-1 leading-relaxed transition-colors">
+                <div className="text-xs sm:text-sm text-muted line-clamp-2 mt-1 leading-relaxed transition-colors">
                   "{item.prompt}"
                 </div>
               </div>
