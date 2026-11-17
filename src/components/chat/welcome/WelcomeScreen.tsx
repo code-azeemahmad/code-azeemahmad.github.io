@@ -90,11 +90,11 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
                 <ArrowUpRight className="h-3.5 w-3.5 text-muted-soft transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary" />
               </div>
 
-              <div className="mt-2.5 sm:mt-3">
-                <div className="font-serif text-lg sm:text-xl font-medium text-ink tracking-tight transition-colors">
+              <div className="mt-2 sm:mt-2.5">
+                <div className="font-serif text-sm sm:text-base font-medium text-ink tracking-tight transition-colors">
                   {item.title}
                 </div>
-                <div className="text-xs sm:text-sm text-muted line-clamp-2 mt-1 leading-relaxed transition-colors">
+                <div className="text-[11px] sm:text-xs text-muted line-clamp-2 mt-1 leading-relaxed transition-colors">
                   "{item.prompt}"
                 </div>
               </div>
