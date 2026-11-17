@@ -52,7 +52,7 @@ export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
         <img
           src="/azeempic.jpeg"
           alt="Azeem Ahmad"
-          className="h-20 w-20 sm:h-28 sm:w-28 rounded-full object-cover object-[40%_20%] border-2 sm:border-[2.5px] border-primary shadow-md"
+          className="h-32 w-32 sm:h-60 sm:w-60 rounded-full object-cover object-[40%_20%] border-2 sm:border-[2.5px] border-primary shadow-md"
           loading="eager"
         />
       </div>
