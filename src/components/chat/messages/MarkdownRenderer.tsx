@@ -8,6 +8,7 @@ interface CodeBlockProps {
   children: string;
 }
 
+// Anthropic code-window-card: dark surface (#181715) on cream canvas
 function CodeBlock({ language, children }: CodeBlockProps) {
   const [copied, setCopied] = React.useState(false);
 
@@ -18,20 +19,20 @@ function CodeBlock({ language, children }: CodeBlockProps) {
   };
 
   return (
-    <div className="relative my-3 overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950 font-mono text-xs">
-      <div className="flex items-center justify-between border-b border-neutral-800 bg-neutral-900/80 px-3.5 py-1.5 text-neutral-400">
-        <span className="text-[11px] uppercase tracking-wider text-neutral-400">
+    <div className="relative my-3 overflow-hidden rounded-xl border border-[#252320] bg-[#181715] font-mono text-xs shadow-md">
+      <div className="flex items-center justify-between border-b border-[#252320] bg-[#1f1e1b] px-3.5 py-1.5 text-[#a09d96]">
+        <span className="text-[11px] uppercase tracking-wider text-[#a09d96]">
           {language || "code"}
         </span>
         <button
           onClick={handleCopy}
-          className="inline-flex items-center gap-1 text-[11px] hover:text-white transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1 text-[11px] text-[#a09d96] hover:text-[#faf9f5] transition-colors cursor-pointer"
           aria-label="Copy code block"
         >
           {copied ? (
             <>
-              <Check className="h-3 w-3 text-emerald-400" />
-              <span className="text-emerald-400">Copied</span>
+              <Check className="h-3 w-3 text-[#5db872]" />
+              <span className="text-[#5db872]">Copied</span>
             </>
           ) : (
             <>
@@ -41,7 +42,7 @@ function CodeBlock({ language, children }: CodeBlockProps) {
           )}
         </button>
       </div>
-      <div className="overflow-x-auto p-3.5 leading-relaxed text-neutral-200">
+      <div className="overflow-x-auto p-3.5 leading-relaxed text-[#faf9f5] bg-[#181715]">
         <code>{children}</code>
       </div>
     </div>
@@ -55,29 +56,35 @@ function isSafeUrl(url?: string): boolean {
 
 export function MarkdownRenderer({ content }: { content: string }) {
   return (
-    <div className="markdown-body space-y-2 text-sm leading-relaxed text-neutral-200">
+    <div className="markdown-body space-y-2 text-sm leading-relaxed text-[#3d3d3a]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
-            <h1 className="text-lg font-bold text-neutral-100 mt-3 mb-2">{children}</h1>
+            <h1 className="font-serif text-lg font-normal text-[#141413] tracking-tight mt-3.5 mb-2">
+              {children}
+            </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-base font-semibold text-neutral-100 mt-3 mb-1.5">{children}</h2>
+            <h2 className="font-serif text-base font-normal text-[#141413] tracking-tight mt-3 mb-1.5">
+              {children}
+            </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-sm font-semibold text-neutral-100 mt-2.5 mb-1">{children}</h3>
+            <h3 className="font-serif text-sm font-medium text-[#141413] tracking-tight mt-2.5 mb-1">
+              {children}
+            </h3>
           ),
-          p: ({ children }) => <p className="leading-relaxed mb-2 last:mb-0">{children}</p>,
+          p: ({ children }) => <p className="leading-relaxed mb-2 last:mb-0 text-[#3d3d3a]">{children}</p>,
           ul: ({ children }) => (
-            <ul className="list-disc list-outside pl-5 space-y-1 my-2">{children}</ul>
+            <ul className="list-disc list-outside pl-5 space-y-1 my-2 text-[#3d3d3a]">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal list-outside pl-5 space-y-1 my-2">{children}</ol>
+            <ol className="list-decimal list-outside pl-5 space-y-1 my-2 text-[#3d3d3a]">{children}</ol>
           ),
           li: ({ children }) => <li className="leading-relaxed">{children}</li>,
           blockquote: ({ children }) => (
-            <blockquote className="border-l-2 border-blue-500/60 bg-blue-500/5 pl-3 py-1 my-2 italic text-neutral-300 rounded-r">
+            <blockquote className="border-l-2 border-[#cc785c] bg-[#f5f0e8] pl-3 py-1 my-2 italic text-[#252523] rounded-r">
               {children}
             </blockquote>
           ),
@@ -90,7 +97,7 @@ export function MarkdownRenderer({ content }: { content: string }) {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 underline underline-offset-2 hover:text-blue-300 transition-colors"
+                className="text-[#cc785c] underline underline-offset-2 hover:text-[#a9583e] transition-colors font-medium"
               >
                 {children}
               </a>
@@ -98,39 +105,30 @@ export function MarkdownRenderer({ content }: { content: string }) {
           },
           table: ({ children }) => (
             <div className="overflow-x-auto my-3">
-              <table className="min-w-full divide-y divide-neutral-800 text-xs border border-neutral-800 rounded-lg">
+              <table className="w-full border-collapse border border-[#e6dfd8] text-xs">
                 {children}
               </table>
             </div>
           ),
-          thead: ({ children }) => <thead className="bg-neutral-900">{children}</thead>,
-          tbody: ({ children }) => (
-            <tbody className="divide-y divide-neutral-800/60 bg-neutral-950/40">{children}</tbody>
+          thead: ({ children }) => (
+            <thead className="bg-[#efe9de] text-[#141413] font-medium">{children}</thead>
           ),
           th: ({ children }) => (
-            <th className="px-3 py-2 text-left font-medium text-neutral-300 uppercase tracking-wider">
+            <th className="border border-[#e6dfd8] px-3 py-1.5 text-left font-semibold">
               {children}
             </th>
           ),
-          td: ({ children }) => <td className="px-3 py-2 text-neutral-300">{children}</td>,
-          code: ({ className, children, ...props }) => {
-            const match = /language-(\w+)/.exec(className || "");
-            const codeString = String(children).replace(/\n$/, "");
-            const isMultiline = codeString.includes("\n");
-
-            if (isMultiline || match) {
-              return (
-                <CodeBlock language={match ? match[1] : undefined}>
-                  {codeString}
-                </CodeBlock>
-              );
+          td: ({ children }) => (
+            <td className="border border-[#e6dfd8] px-3 py-1.5 text-[#3d3d3a]">{children}</td>
+          ),
+          code: ({ className, children }) => {
+            const isCodeBlock = className && className.startsWith("language-");
+            if (isCodeBlock) {
+              const language = className ? className.replace("language-", "") : "";
+              return <CodeBlock language={language}>{String(children).replace(/\n$/, "")}</CodeBlock>;
             }
-
             return (
-              <code
-                className="rounded bg-neutral-800/80 px-1.5 py-0.5 font-mono text-[12px] text-blue-300 border border-neutral-700/50"
-                {...props}
-              >
+              <code className="rounded border border-[#e6dfd8] bg-[#efe9de] px-1.5 py-0.5 text-xs text-[#141413] font-mono">
                 {children}
               </code>
             );

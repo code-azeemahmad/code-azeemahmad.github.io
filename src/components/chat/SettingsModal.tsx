@@ -50,14 +50,14 @@ export function SettingsModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Settings & AI Provider (BYOK)"
-      description="Connect your own LLM API key for live AI conversations or explore with verified local answers."
+      description="Connect your personal LLM API key for live AI conversations or explore with verified local answers."
     >
-      <div className="space-y-6 text-sm text-neutral-300">
+      <div className="space-y-5 text-sm text-[#3d3d3a]">
         {/* BYOK Configuration Section */}
-        <div className="rounded-xl border border-neutral-800 bg-neutral-950/60 p-4 space-y-3.5">
+        <div className="rounded-xl border border-[#e6dfd8] bg-[#efe9de] p-4 space-y-3.5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 font-medium text-neutral-100">
-              <Key className="h-4 w-4 text-blue-400" />
+            <div className="flex items-center gap-2 font-medium text-[#141413]">
+              <Key className="h-4 w-4 text-[#cc785c]" />
               <span>Bring Your Own Key (BYOK)</span>
             </div>
             {apiKey ? (
@@ -72,14 +72,14 @@ export function SettingsModal({
             )}
           </div>
 
-          <p className="text-xs text-neutral-400 leading-relaxed">
+          <p className="text-xs text-[#6c6a64] leading-relaxed">
             By default, the portfolio answers questions accurately using local knowledge retrieval.
             To enable dynamic live streaming with modern reasoning models, choose a provider below.
           </p>
 
           {/* Provider Selection */}
           <div className="space-y-2 pt-1">
-            <label className="text-xs font-medium text-neutral-300">
+            <label className="text-xs font-medium text-[#141413]">
               Select Provider
             </label>
             <div className="grid grid-cols-2 gap-2 text-xs">
@@ -94,16 +94,16 @@ export function SettingsModal({
                     onClick={() => setProvider(pId)}
                     className={`flex items-center justify-between rounded-lg border p-2.5 text-left transition-colors cursor-pointer ${
                       isSelected
-                        ? "border-blue-500/50 bg-blue-500/10 text-blue-300 font-medium"
-                        : "border-neutral-800 bg-neutral-900/50 text-neutral-400 hover:border-neutral-700"
+                        ? "border-[#cc785c] bg-[#e8e0d2] text-[#141413] font-medium shadow-xs"
+                        : "border-[#e6dfd8] bg-[#faf9f5] text-[#3d3d3a] hover:bg-[#efe9de] hover:border-[#d4cbbe]"
                     }`}
                   >
                     <div>
-                      <div>{conf.name}</div>
-                      <div className="text-[10px] text-neutral-500">{conf.defaultModel}</div>
+                      <div className="font-medium">{conf.name}</div>
+                      <div className="text-[10px] text-[#6c6a64]">{conf.defaultModel}</div>
                     </div>
                     {isSelected && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shrink-0 ml-1" />
+                      <span className="h-2 w-2 rounded-full bg-[#cc785c]" />
                     )}
                   </button>
                 );
@@ -111,90 +111,93 @@ export function SettingsModal({
             </div>
           </div>
 
-          {/* Key Input */}
-          <div className="space-y-1.5 pt-2">
-            <div className="flex items-center justify-between">
-              <label
-                htmlFor="api-key-input"
-                className="text-xs font-medium text-neutral-300"
-              >
+          {/* API Key Input */}
+          <div className="space-y-1.5 pt-1">
+            <div className="flex items-center justify-between text-xs">
+              <label className="font-medium text-[#141413]">
                 {activeProviderConfig.name} API Key
               </label>
               <a
                 href={activeProviderConfig.helpUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] text-blue-400 hover:underline"
+                className="inline-flex items-center gap-1 text-[11px] text-[#cc785c] hover:underline"
               >
-                <span>Get a key</span>
+                <span>Get key</span>
                 <ExternalLink className="h-2.5 w-2.5" />
               </a>
             </div>
 
             <div className="relative">
               <input
-                id="api-key-input"
                 type={showKey ? "text" : "password"}
-                placeholder={activeProviderConfig.placeholder}
                 value={keyInput}
                 onChange={(e) => setKeyInput(e.target.value)}
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-2 pr-9 text-xs text-neutral-100 placeholder:text-neutral-600 focus:border-blue-500 focus:outline-none"
+                placeholder={activeProviderConfig.placeholder}
+                className="w-full rounded-lg border border-[#e6dfd8] bg-[#faf9f5] px-3 py-2 pr-9 text-xs text-[#141413] placeholder:text-[#8e8b82] focus:border-[#cc785c] focus:outline-none focus:ring-2 focus:ring-[#cc785c]/20"
               />
               <button
                 type="button"
                 onClick={() => setShowKey(!showKey)}
-                className="absolute right-2.5 top-2.5 text-neutral-500 hover:text-neutral-300"
-                aria-label={showKey ? "Hide key" : "Show key"}
+                className="absolute right-2.5 top-2.5 text-[#8e8b82] hover:text-[#141413] transition-colors"
+                title={showKey ? "Hide key" : "Show key"}
               >
                 {showKey ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
               </button>
             </div>
+          </div>
+        </div>
 
-            <div className="flex items-center justify-between pt-1 text-[10px] text-neutral-500">
-              <span>Keys remain in memory and are never sent to any intermediary server.</span>
-              {keyInput && (
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="text-red-400 hover:underline ml-2"
-                >
-                  Clear Key
-                </button>
-              )}
+        {/* Security & Privacy Notice */}
+        <div className="rounded-xl border border-[#e6dfd8] bg-[#f5f0e8] p-3.5 flex items-start gap-3">
+          <ShieldCheck className="h-5 w-5 text-[#5db8a6] shrink-0 mt-0.5" />
+          <div className="text-xs text-[#3d3d3a] leading-relaxed">
+            <div className="font-medium text-[#141413] mb-0.5">In-Memory Security Guarantee</div>
+            Your API key is never written to disk, <code className="rounded bg-[#efe9de] border border-[#e6dfd8] px-1 py-0.5 text-[10px]">localStorage</code>, or transmitted to any server other than your selected provider directly from your browser. Closing or reloading the tab purges the key immediately.
+          </div>
+        </div>
+
+        {/* Local Storage & History Actions */}
+        {onClearHistory && (
+          <div className="rounded-xl border border-[#e6dfd8] bg-[#faf9f5] p-3.5 flex items-center justify-between">
+            <div>
+              <div className="text-xs font-medium text-[#141413]">Local Conversation History</div>
+              <div className="text-[11px] text-[#6c6a64]">Stored in your browser's private storage</div>
             </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                onClearHistory();
+                onClose();
+              }}
+              className="text-[#c64545] hover:bg-[#efe9de] text-xs h-8 border-[#e6dfd8]"
+            >
+              <Trash2 className="h-3.5 w-3.5 mr-1" />
+              Clear History
+            </Button>
           </div>
-        </div>
+        )}
 
-        {/* Privacy & Security Notice */}
-        <div className="rounded-xl border border-neutral-800/80 bg-neutral-950/40 p-4 space-y-2">
-          <div className="flex items-center gap-2 font-medium text-xs text-neutral-200">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
-            <span>Privacy Disclosure</span>
-          </div>
-          <ul className="text-xs text-neutral-400 space-y-1 list-disc list-inside leading-relaxed">
-            <li>Requests go directly from your browser to {activeProviderConfig.name}'s API.</li>
-            <li>No analytics or backend services proxy or record your credentials.</li>
-            <li>Closing this tab automatically unloads the in-memory key.</li>
-          </ul>
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center justify-between border-t border-neutral-800 pt-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onClearHistory}
-            className="text-xs text-neutral-400 hover:text-red-400 hover:bg-red-500/10 gap-1.5"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-            <span>Clear Local History</span>
-          </Button>
+        {/* Dialog Actions */}
+        <div className="flex items-center justify-between pt-2">
+          {keyInput ? (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="text-xs text-[#6c6a64] hover:text-[#c64545] transition-colors cursor-pointer"
+            >
+              Remove key
+            </button>
+          ) : (
+            <div />
+          )}
 
           <div className="flex items-center gap-2">
             <Button variant="outline" size="sm" onClick={onClose}>
               Cancel
             </Button>
-            <Button variant="default" size="sm" onClick={handleSave} className="px-5">
+            <Button variant="default" size="sm" onClick={handleSave}>
               Save Settings
             </Button>
           </div>

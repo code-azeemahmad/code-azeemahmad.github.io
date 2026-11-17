@@ -3,8 +3,8 @@ import { cn } from "@/lib/utils";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive";
-  size?: "sm" | "md" | "lg" | "icon";
+  variant?: "default" | "secondary" | "outline" | "ghost" | "destructive" | "dark";
+  size?: "sm" | "md" | "lg" | "icon" | "icon-sm";
   isLoading?: boolean;
 }
 
@@ -21,19 +21,29 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    // 8px radius (--rounded-md), focus ring in primary coral at 20% alpha
     const baseStyles =
-      "inline-flex items-center justify-center font-medium transition-colors cursor-pointer select-none rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]";
+      "inline-flex items-center justify-center font-medium transition-colors cursor-pointer select-none rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cc785c]/30 focus-visible:ring-offset-2 focus-visible:ring-offset-[#faf9f5] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.99]";
 
     const variantStyles = {
-      default: "bg-blue-600 text-white hover:bg-blue-500 shadow-sm",
+      // Primary coral CTA
+      default:
+        "bg-[#cc785c] text-white hover:bg-[#a9583e] active:bg-[#a9583e] disabled:bg-[#e6dfd8] disabled:text-[#6c6a64] shadow-sm",
+      // Secondary cream with hairline border
       secondary:
-        "bg-neutral-800 text-neutral-100 hover:bg-neutral-700/80 border border-neutral-700/60",
+        "bg-[#faf9f5] text-[#141413] hover:bg-[#efe9de] active:bg-[#e8e0d2] border border-[#e6dfd8] shadow-sm",
+      // Outline with hairline border
       outline:
-        "border border-neutral-800 bg-transparent text-neutral-300 hover:bg-neutral-800/60 hover:text-white",
+        "border border-[#e6dfd8] bg-transparent text-[#141413] hover:bg-[#efe9de] hover:text-[#141413]",
+      // Ghost button
       ghost:
-        "bg-transparent text-neutral-400 hover:bg-neutral-800/70 hover:text-neutral-100",
+        "bg-transparent text-[#6c6a64] hover:bg-[#efe9de] hover:text-[#141413]",
+      // Destructive
       destructive:
-        "bg-red-600/90 text-white hover:bg-red-500 focus-visible:ring-red-500",
+        "bg-[#c64545] text-white hover:bg-[#a33737] focus-visible:ring-[#c64545]",
+      // Secondary on dark surface
+      dark:
+        "bg-[#252320] text-[#faf9f5] hover:bg-[#181715] border border-[#3d3d3a]",
     };
 
     const sizeStyles = {
@@ -41,6 +51,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       md: "h-9 px-4 text-sm gap-2",
       lg: "h-11 px-5 text-base gap-2.5",
       icon: "h-9 w-9 p-0 flex items-center justify-center shrink-0",
+      "icon-sm": "h-8 w-8 p-0 flex items-center justify-center shrink-0",
     };
 
     return (
@@ -59,8 +70,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           <span className="inline-flex items-center gap-2">
             <svg
               className="h-4 w-4 animate-spin text-current"
+              xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <circle
                 className="opacity-25"

@@ -1,5 +1,6 @@
 import * as React from "react";
-import { User, Bot, Copy, Check, ExternalLink, Bookmark } from "lucide-react";
+import { User, Copy, Check, ExternalLink, Bookmark } from "lucide-react";
+import { SpikeMark } from "@/components/ui/SpikeMark";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import type { ChatMessage } from "@/types/chat";
 
@@ -25,35 +26,35 @@ export function MessageItem({ message }: MessageItemProps) {
     >
       {/* Avatar */}
       <div
-        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-xl text-xs font-semibold ${
+        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xs font-semibold border ${
           isUser
-            ? "bg-blue-600 text-white shadow-sm"
-            : "bg-neutral-800 text-blue-400 border border-neutral-700/60 shadow-sm"
+            ? "bg-[#efe9de] text-[#141413] border-[#e6dfd8] shadow-xs"
+            : "bg-[#efe9de] text-[#cc785c] border-[#e6dfd8] shadow-xs"
         }`}
         aria-hidden="true"
       >
-        {isUser ? <User className="h-4 w-4" /> : <Bot className="h-4 w-4" />}
+        {isUser ? <User className="h-4 w-4" /> : <SpikeMark className="h-4 w-4 text-[#cc785c]" />}
       </div>
 
       {/* Message Content Bubble */}
       <div
-        className={`relative max-w-[88%] sm:max-w-[82%] rounded-2xl px-4 py-3 text-sm shadow-sm transition-all ${
+        className={`relative max-w-[88%] sm:max-w-[82%] rounded-xl px-4.5 py-3.5 text-sm transition-all shadow-xs ${
           isUser
-            ? "bg-blue-600 text-white"
-            : "border border-neutral-800 bg-neutral-900/90 text-neutral-200"
+            ? "border border-[#e6dfd8] bg-[#efe9de] text-[#141413]"
+            : "border border-[#e6dfd8] bg-[#faf9f5] text-[#3d3d3a]"
         }`}
       >
         {isUser ? (
-          <div className="whitespace-pre-wrap leading-relaxed">{message.content}</div>
+          <div className="whitespace-pre-wrap leading-relaxed font-normal">{message.content}</div>
         ) : (
           <MarkdownRenderer content={message.content} />
         )}
 
         {/* Source References & Citations */}
         {!isUser && message.citations && message.citations.length > 0 && (
-          <div className="mt-3 border-t border-neutral-800/80 pt-2.5">
-            <div className="flex items-center gap-1.5 text-[11px] font-medium text-neutral-400 mb-1.5">
-              <Bookmark className="h-3 w-3 text-blue-400" />
+          <div className="mt-3.5 border-t border-[#e6dfd8] pt-2.5">
+            <div className="flex items-center gap-1.5 text-[11px] font-medium text-[#6c6a64] mb-2 uppercase tracking-wider">
+              <Bookmark className="h-3 w-3 text-[#cc785c]" />
               <span>Referenced Sources</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -70,10 +71,10 @@ export function MessageItem({ message }: MessageItemProps) {
                           rel: "noopener noreferrer",
                         }
                       : {})}
-                    className="inline-flex items-center gap-1 rounded-md border border-neutral-800 bg-neutral-950/60 px-2 py-0.5 text-[10px] text-neutral-300 hover:border-neutral-700 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1 rounded-full border border-[#e6dfd8] bg-[#efe9de] px-2.5 py-1 text-[11px] text-[#141413] hover:bg-[#e8e0d2] hover:border-[#d4cbbe] transition-colors"
                   >
                     <span className="truncate max-w-[180px]">{citation.title}</span>
-                    {isLink && <ExternalLink className="h-2.5 w-2.5 text-neutral-500" />}
+                    {isLink && <ExternalLink className="h-2.5 w-2.5 text-[#cc785c]" />}
                   </Component>
                 );
               })}
@@ -83,21 +84,21 @@ export function MessageItem({ message }: MessageItemProps) {
 
         {/* Assistant Footer */}
         {!isUser && (
-          <div className="mt-2.5 flex items-center justify-between border-t border-neutral-800/60 pt-2 text-[11px] text-neutral-500">
+          <div className="mt-2.5 flex items-center justify-between border-t border-[#e6dfd8] pt-2 text-[11px] text-[#8e8b82]">
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-400/80" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[#5db8a6]" />
               <span>Grounded in portfolio</span>
             </span>
 
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-1 hover:text-neutral-300 transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1 text-[#8e8b82] hover:text-[#cc785c] transition-colors cursor-pointer"
               aria-label="Copy assistant response"
             >
               {copied ? (
                 <>
-                  <Check className="h-3 w-3 text-emerald-400" />
-                  <span className="text-emerald-400">Copied</span>
+                  <Check className="h-3 w-3 text-[#5db872]" />
+                  <span className="text-[#5db872]">Copied</span>
                 </>
               ) : (
                 <>

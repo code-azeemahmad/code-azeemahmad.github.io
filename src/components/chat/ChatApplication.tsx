@@ -6,7 +6,8 @@ import { WelcomeScreen } from "./welcome/WelcomeScreen";
 import { ChatComposer } from "./input/ChatComposer";
 import { SettingsModal } from "./SettingsModal";
 import { MessageItem } from "./messages/MessageItem";
-import { Bot, ArrowRight } from "lucide-react";
+import { SpikeMark } from "@/components/ui/SpikeMark";
+import { ArrowRight } from "lucide-react";
 import { getFeaturedChatById } from "@/data";
 import { useConversationManager } from "@/hooks/useConversationManager";
 import { executeChatStream } from "@/lib/ai/chatOrchestrator";
@@ -159,7 +160,7 @@ export function ChatApplication() {
   const currentProviderConfig = SUPPORTED_PROVIDERS[selectedProvider];
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-neutral-950 text-neutral-100 antialiased font-sans">
+    <div className="flex h-screen w-full overflow-hidden bg-[#faf9f5] text-[#141413] antialiased font-sans">
       {/* Desktop Collapsible Sidebar */}
       <div className="hidden md:flex md:shrink-0">
         <Sidebar
@@ -178,7 +179,6 @@ export function ChatApplication() {
           onRenameConversation={renameConversation}
           onDeleteConversation={deleteConversation}
           onClearAll={clearAllConversations}
-          onExportActive={exportActiveConversation}
           onOpenSettings={() => setIsSettingsOpen(true)}
         />
       </div>
@@ -205,7 +205,6 @@ export function ChatApplication() {
           onRenameConversation={renameConversation}
           onDeleteConversation={deleteConversation}
           onClearAll={clearAllConversations}
-          onExportActive={exportActiveConversation}
           onOpenSettings={() => {
             setIsMobileDrawerOpen(false);
             setIsSettingsOpen(true);
@@ -215,7 +214,7 @@ export function ChatApplication() {
       </MobileDrawer>
 
       {/* Main Conversation Workspace */}
-      <div className="flex flex-1 flex-col h-full overflow-hidden bg-neutral-950">
+      <div className="flex flex-1 flex-col h-full overflow-hidden bg-[#faf9f5]">
         <ChatHeader
           title={
             activeConversation?.title ||
@@ -272,12 +271,12 @@ export function ChatApplication() {
 
               {isLoading && !messages[messages.length - 1]?.content && (
                 <div className="flex items-start gap-3.5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-neutral-800 text-blue-400 border border-neutral-700/60 shadow-sm">
-                    <Bot className="h-4 w-4" />
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#efe9de] border border-[#e6dfd8] text-[#cc785c] shadow-xs">
+                    <SpikeMark className="h-4 w-4" />
                   </div>
-                  <div className="rounded-2xl border border-neutral-800 bg-neutral-900/80 px-4 py-3 text-sm text-neutral-400">
+                  <div className="rounded-xl border border-[#e6dfd8] bg-[#efe9de] px-4 py-3 text-sm text-[#6c6a64] shadow-xs">
                     <span className="inline-flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-blue-400 animate-pulse" />
+                      <span className="h-2 w-2 rounded-full bg-[#cc785c] animate-pulse" />
                       <span>
                         {apiKey
                           ? `Streaming live response from ${currentProviderConfig.name}...`
@@ -291,7 +290,7 @@ export function ChatApplication() {
               {/* Follow-up suggestions from active template */}
               {activeTemplate && activeTemplate.suggestedQuestions && (
                 <div className="pt-3">
-                  <div className="text-[11px] font-medium text-neutral-500 mb-2 uppercase tracking-wider">
+                  <div className="text-[11px] font-medium text-[#6c6a64] mb-2 uppercase tracking-wider">
                     Suggested Questions
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -299,10 +298,10 @@ export function ChatApplication() {
                       <button
                         key={i}
                         onClick={() => handleSendMessage(question)}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-neutral-800 bg-neutral-900/70 px-3 py-1.5 text-xs text-neutral-300 hover:border-neutral-700 hover:bg-neutral-800 hover:text-white transition-colors cursor-pointer text-left shadow-sm"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-[#e6dfd8] bg-[#efe9de] px-3 py-1.5 text-xs text-[#141413] hover:bg-[#e8e0d2] hover:border-[#d4cbbe] transition-colors cursor-pointer text-left shadow-xs font-normal"
                       >
                         <span>{question}</span>
-                        <ArrowRight className="h-3 w-3 text-neutral-500" />
+                        <ArrowRight className="h-3 w-3 text-[#cc785c]" />
                       </button>
                     ))}
                   </div>
