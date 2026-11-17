@@ -62,7 +62,7 @@ export function ChatComposer({
           placeholder={placeholder}
           disabled={disabled}
           rows={1}
-          className="w-full resize-none bg-transparent px-4 py-3.5 pr-14 text-sm text-ink placeholder:text-muted-soft focus:outline-none disabled:opacity-50 min-h-[48px] max-h-[180px] leading-relaxed"
+          className="w-full resize-none bg-transparent px-4 py-3.5 pr-14 text-[15px] text-ink placeholder:text-muted-soft focus:outline-none disabled:opacity-50 min-h-[50px] max-h-[180px] leading-relaxed"
           aria-label="Message input"
         />
 

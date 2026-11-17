@@ -56,7 +56,7 @@ function isSafeUrl(url?: string): boolean {
 
 export function MarkdownRenderer({ content }: { content: string }) {
   return (
-    <div className="markdown-body space-y-2 text-sm leading-relaxed text-body transition-colors">
+    <div className="markdown-body space-y-2 text-[15px] leading-[1.65] text-body transition-colors">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{

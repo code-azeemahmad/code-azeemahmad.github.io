@@ -38,7 +38,7 @@ export function MessageItem({ message }: MessageItemProps) {
 
       {/* Message Content Bubble */}
       <div
-        className={`relative max-w-[88%] sm:max-w-[82%] rounded-xl px-4.5 py-3.5 text-sm transition-all shadow-xs ${
+        className={`relative max-w-[88%] sm:max-w-[82%] rounded-xl px-4.5 py-3.5 text-[15px] transition-all shadow-xs ${
           isUser
             ? "border border-hairline bg-surface-card text-ink"
             : "border border-hairline bg-canvas text-body"
