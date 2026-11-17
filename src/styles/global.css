@@ -82,14 +82,7 @@ html.light {
   }
 
   html {
-    /* Increased base font size by 1px (17px on desktop, 16px on mobile) for optimal editorial legibility */
-    font-size: 17px;
-  }
-
-  @media (max-width: 640px) {
-    html {
-      font-size: 16px;
-    }
+    font-size: 110%;
   }
 
   body {
