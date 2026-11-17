@@ -46,11 +46,11 @@ export function Dialog({
       role="dialog"
       aria-modal="true"
       aria-labelledby="dialog-title"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4"
     >
       {/* Warm tinted backdrop */}
       <div
-        className="fixed inset-0 bg-[#141413]/60 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -58,24 +58,24 @@ export function Dialog({
       {/* Content panel */}
       <div
         className={cn(
-          "relative z-10 w-full max-w-lg rounded-2xl border border-[#e6dfd8] bg-[#faf9f5] p-6 shadow-2xl shadow-[#141413]/15 transition-all text-[#141413]",
+          "relative z-10 w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-hairline bg-canvas p-4 sm:p-6 shadow-2xl transition-all text-ink",
           className
         )}
       >
         <div className="flex items-start justify-between gap-4 mb-4">
           <div>
-            <h2 id="dialog-title" className="font-serif text-xl font-medium tracking-tight text-[#141413]">
+            <h2 id="dialog-title" className="font-serif text-lg sm:text-xl font-medium tracking-tight text-ink">
               {title}
             </h2>
             {description && (
-              <p className="mt-1 text-xs text-[#6c6a64] leading-relaxed">
+              <p className="mt-1 text-xs text-muted leading-relaxed">
                 {description}
               </p>
             )}
           </div>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#e6dfd8] bg-[#faf9f5] text-[#6c6a64] hover:bg-[#efe9de] hover:text-[#141413] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cc785c]/30"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-hairline bg-surface-card text-muted hover:bg-surface-cream-strong hover:text-ink transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30"
             aria-label="Close dialog"
           >
             <X className="h-4 w-4" />

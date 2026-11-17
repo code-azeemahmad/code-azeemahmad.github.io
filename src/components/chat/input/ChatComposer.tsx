@@ -49,7 +49,7 @@ export function ChatComposer({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto px-4 pb-4 pt-2">
+    <div className="w-full max-w-3xl mx-auto px-3 sm:px-4 pt-2 pb-3 sm:pb-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
       <form
         onSubmit={handleSubmit}
         className="relative flex flex-col rounded-xl border border-hairline bg-canvas shadow-sm transition-all focus-within:border-primary focus-within:ring-3 focus-within:ring-primary/15"
@@ -62,12 +62,12 @@ export function ChatComposer({
           placeholder={placeholder}
           disabled={disabled}
           rows={1}
-          className="w-full resize-none bg-transparent px-4 py-3.5 pr-14 text-[15px] text-ink placeholder:text-muted-soft focus:outline-none disabled:opacity-50 min-h-[50px] max-h-[180px] leading-relaxed"
+          className="w-full resize-none bg-transparent px-3.5 sm:px-4 py-3 sm:py-3.5 pr-14 text-[14px] sm:text-[15px] text-ink placeholder:text-muted-soft focus:outline-none disabled:opacity-50 min-h-[46px] sm:min-h-[50px] max-h-[180px] leading-relaxed"
           aria-label="Message input"
         />
 
-        <div className="flex items-center justify-between px-3 pb-2.5 pt-1">
-          <div className="text-[11px] text-muted-soft">
+        <div className="flex items-center justify-end sm:justify-between px-3 pb-2.5 pt-1">
+          <div className="hidden sm:block text-[11px] text-muted-soft">
             Press <kbd className="rounded bg-surface-card border border-hairline px-1 py-0.5 text-[10px] text-body">Enter</kbd> to send, <kbd className="rounded bg-surface-card border border-hairline px-1 py-0.5 text-[10px] text-body">Shift+Enter</kbd> for newline
           </div>
 
@@ -102,7 +102,7 @@ export function ChatComposer({
       </form>
 
       {/* Grounding Disclaimer */}
-      <div className="mt-2 text-center text-[11px] text-muted-soft">
+      <div className="mt-1.5 sm:mt-2 text-center text-[10px] sm:text-[11px] text-muted-soft px-2">
         Grounded portfolio answers are factual and source-referenced. Live responses powered by BYOK streaming.
       </div>
     </div>

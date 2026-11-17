@@ -42,22 +42,22 @@ export function ChatHeader({
   const [exportMenuOpen, setExportMenuOpen] = React.useState(false);
 
   return (
-    <header className="flex h-14 w-full shrink-0 items-center justify-between border-b border-hairline bg-canvas px-3 md:px-6 select-none transition-colors">
-      <div className="flex items-center gap-3 overflow-hidden">
+    <header className="flex h-14 w-full shrink-0 items-center justify-between border-b border-hairline bg-canvas px-2.5 sm:px-4 md:px-6 select-none transition-colors">
+      <div className="flex items-center gap-2 sm:gap-3 overflow-hidden min-w-0 mr-2">
         {/* Mobile menu trigger */}
         <Button
           variant="ghost"
           size="icon"
           onClick={onOpenMobileMenu}
-          className="md:hidden text-muted hover:text-ink hover:bg-surface-card shrink-0"
+          className="md:hidden text-muted hover:text-ink hover:bg-surface-card shrink-0 h-8 w-8"
           aria-label="Open sidebar menu"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-4.5 w-4.5" />
         </Button>
 
         {/* Title and status */}
-        <div className="flex items-center gap-2 truncate">
-          <span className="font-serif text-base font-medium text-ink truncate max-w-[180px] sm:max-w-xs md:max-w-md tracking-tight">
+        <div className="flex items-center gap-2 truncate min-w-0">
+          <span className="font-serif text-sm sm:text-base font-medium text-ink truncate tracking-tight">
             {title}
           </span>
           <Badge
@@ -75,7 +75,7 @@ export function ChatHeader({
       </div>
 
       {/* Right actions */}
-      <div className="flex items-center gap-1 shrink-0">
+      <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
         {/* Theme Switcher Button */}
         {onToggleTheme && (
           <Button

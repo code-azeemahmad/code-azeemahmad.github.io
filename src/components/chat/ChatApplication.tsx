@@ -164,7 +164,7 @@ export function ChatApplication() {
   const currentProviderConfig = SUPPORTED_PROVIDERS[selectedProvider];
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-canvas text-ink antialiased font-sans transition-colors">
+    <div className="flex h-screen h-[100dvh] w-full overflow-hidden bg-canvas text-ink antialiased font-sans transition-colors">
       {/* Desktop Collapsible Sidebar */}
       <div className="hidden md:flex md:shrink-0">
         <Sidebar
@@ -195,6 +195,7 @@ export function ChatApplication() {
         onClose={() => setIsMobileDrawerOpen(false)}
       >
         <Sidebar
+          isMobile={true}
           isCollapsed={false}
           onToggleCollapse={() => setIsMobileDrawerOpen(false)}
           activeTopicId={activeConversation?.featuredTopicId || null}

@@ -67,6 +67,7 @@ export const FEATURED_TOPICS: FeaturedTopic[] = [
 export interface SidebarProps {
   isCollapsed: boolean;
   onToggleCollapse: () => void;
+  isMobile?: boolean;
   activeTopicId?: string | null;
   activeConversationId?: string | null;
   conversations: Conversation[];
@@ -87,6 +88,7 @@ export interface SidebarProps {
 export function Sidebar({
   isCollapsed,
   onToggleCollapse,
+  isMobile = false,
   activeTopicId,
   activeConversationId,
   conversations,
@@ -159,10 +161,12 @@ export function Sidebar({
             size="icon"
             onClick={onToggleCollapse}
             className="h-8 w-8 text-muted hover:text-ink hover:bg-surface-card"
-            title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            title={isMobile ? "Close menu" : isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            aria-label={isMobile ? "Close menu" : isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
-            {isCollapsed ? (
+            {isMobile ? (
+              <X className="h-4 w-4" />
+            ) : isCollapsed ? (
               <PanelLeftOpen className="h-4 w-4" />
             ) : (
               <PanelLeftClose className="h-4 w-4" />
@@ -356,7 +360,7 @@ export function Sidebar({
         </div>
 
         {/* Bottom Profile & Settings Card */}
-        <div className="border-t border-hairline p-2 bg-surface-card transition-colors">
+        <div className="border-t border-hairline p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-surface-card transition-colors">
           {!isCollapsed ? (
             <div className="flex items-center justify-between rounded-lg bg-canvas p-2 border border-hairline">
               <div className="flex items-center gap-2 overflow-hidden">

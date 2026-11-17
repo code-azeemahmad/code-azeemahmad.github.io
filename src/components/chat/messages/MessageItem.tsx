@@ -20,7 +20,7 @@ export function MessageItem({ message }: MessageItemProps) {
 
   return (
     <div
-      className={`flex items-start gap-3.5 group ${
+      className={`flex items-start gap-2.5 sm:gap-3.5 group ${
         isUser ? "flex-row-reverse" : "flex-row"
       }`}
     >
@@ -38,7 +38,7 @@ export function MessageItem({ message }: MessageItemProps) {
 
       {/* Message Content Bubble */}
       <div
-        className={`relative max-w-[88%] sm:max-w-[82%] rounded-xl px-4.5 py-3.5 text-[15px] transition-all shadow-xs ${
+        className={`relative max-w-[calc(100%-44px)] sm:max-w-[82%] rounded-xl px-3.5 sm:px-4.5 py-2.5 sm:py-3.5 text-[14px] sm:text-[15px] transition-all shadow-xs ${
           isUser
             ? "border border-hairline bg-surface-card text-ink"
             : "border border-hairline bg-canvas text-body"

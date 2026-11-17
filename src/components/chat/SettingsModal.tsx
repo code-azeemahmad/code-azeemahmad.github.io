@@ -124,7 +124,7 @@ export function SettingsModal({
             <label className="text-xs font-medium text-ink">
               Select Provider
             </label>
-            <div className="grid grid-cols-2 gap-2 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
               {(Object.keys(SUPPORTED_PROVIDERS) as LLMProviderId[]).map((pId) => {
                 const conf = SUPPORTED_PROVIDERS[pId];
                 const isSelected = provider === pId;
@@ -201,7 +201,7 @@ export function SettingsModal({
 
         {/* Local Storage & History Actions */}
         {onClearHistory && (
-          <div className="rounded-xl border border-hairline bg-canvas p-3.5 flex items-center justify-between transition-colors">
+          <div className="rounded-xl border border-hairline bg-canvas p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition-colors">
             <div>
               <div className="text-xs font-medium text-ink">Local Conversation History</div>
               <div className="text-[11px] text-muted">Stored in your browser's private storage</div>

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export interface MobileDrawerProps {
   isOpen: boolean;
@@ -28,34 +28,34 @@ export function MobileDrawer({ isOpen, onClose, children }: MobileDrawerProps) {
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null;
-
   return (
     <div
       role="dialog"
       aria-modal="true"
       aria-label="Navigation sidebar"
-      className="fixed inset-0 z-50 md:hidden"
+      className={cn(
+        "fixed inset-0 z-50 md:hidden transition-[visibility] duration-300",
+        isOpen ? "visible pointer-events-auto" : "invisible pointer-events-none"
+      )}
     >
-      {/* Warm tinted backdrop */}
+      {/* Warm tinted backdrop with smooth opacity fade */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
+        className={cn(
+          "fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300 ease-out",
+          isOpen ? "opacity-100" : "opacity-0"
+        )}
         onClick={onClose}
         aria-hidden="true"
       />
 
-      {/* Drawer panel */}
-      <div className="relative z-10 flex h-full w-72 max-w-[85vw] flex-col bg-surface-soft border-r border-hairline shadow-2xl transition-transform text-ink">
-        <div className="absolute right-2 top-3 z-20">
-          <button
-            onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-lg border border-hairline bg-canvas text-muted hover:bg-surface-card hover:text-ink cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 transition-colors"
-            aria-label="Close navigation sidebar"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-        <div className="h-full w-full">{children}</div>
+      {/* Drawer panel with smooth springy slide-in from left */}
+      <div
+        className={cn(
+          "relative z-10 flex h-full w-72 max-w-[85vw] flex-col bg-surface-soft border-r border-hairline shadow-2xl transition-transform duration-300 ease-out text-ink",
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="h-full w-full overflow-hidden">{children}</div>
       </div>
     </div>
   );
