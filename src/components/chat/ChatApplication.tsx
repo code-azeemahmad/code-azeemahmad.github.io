@@ -238,11 +238,15 @@ export function ChatApplication() {
           onOpenSettings={() => setIsSettingsOpen(true)}
           onExportMarkdown={() => exportActiveConversation("markdown")}
           onExportJson={() => exportActiveConversation("json")}
-          onDeleteCurrentChat={() => {
-            if (activeConversationId) {
-              deleteConversation(activeConversationId);
-            }
-          }}
+          onDeleteCurrentChat={
+            activeConversation && !activeConversation.isPreloaded
+              ? () => {
+                  if (activeConversationId) {
+                    deleteConversation(activeConversationId);
+                  }
+                }
+              : undefined
+          }
         />
 
         {/* Message Scroll Area / Welcome Screen */}

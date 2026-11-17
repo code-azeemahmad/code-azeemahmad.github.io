@@ -1,4 +1,5 @@
 import type { Conversation, ConversationStorageSchema } from "@/types/chat";
+import { createPreloadedConversations } from "@/data";
 
 export const STORAGE_KEY = "portfolio_chat_storage_v1";
 export const CURRENT_SCHEMA_VERSION = 1;
@@ -23,7 +24,7 @@ function validateSchema(data: unknown): ConversationStorageSchema | null {
       typeof c.title === "string" &&
       typeof c.createdAt === "number" &&
       Array.isArray(c.messages) &&
-      (c.messages.length > 0 || c.isFeaturedFork === true)
+      (c.messages.length > 0 || c.isFeaturedFork === true || c.isPreloaded === true)
   );
 
   return {
@@ -41,37 +42,56 @@ function validateSchema(data: unknown): ConversationStorageSchema | null {
 }
 
 /**
- * Safely loads stored conversations from localStorage.
+ * Safely loads stored conversations from localStorage, merging any visitor-created
+ * chats with canonical preloaded portfolio conversations.
  */
 export function loadStoredConversations(): {
   conversations: Conversation[];
   activeConversationId: string | null;
 } {
+  const preloaded = createPreloadedConversations();
+
   if (typeof window === "undefined") {
-    return { conversations: [], activeConversationId: null };
+    return { conversations: preloaded, activeConversationId: null };
   }
 
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      return { conversations: [], activeConversationId: null };
+      return { conversations: preloaded, activeConversationId: null };
     }
 
     const parsed = JSON.parse(raw);
     const validated = validateSchema(parsed);
 
     if (!validated) {
-      console.warn("Storage schema validation failed. Initializing empty history.");
-      return { conversations: [], activeConversationId: null };
+      console.warn("Storage schema validation failed. Initializing with preloaded portfolio history.");
+      return { conversations: preloaded, activeConversationId: null };
     }
 
+    // Merge visitor conversations with preloaded conversations.
+    // Ensure all preloaded portfolio conversations are present and up to date,
+    // and keep any custom visitor conversations.
+    const preloadedIds = new Set(preloaded.map((p) => p.id));
+    const visitorConversations = validated.conversations.filter(
+      (c) => !preloadedIds.has(c.id) && !c.isPreloaded
+    );
+
+    const mergedConversations = [...visitorConversations, ...preloaded];
+
+    const activeId =
+      validated.activeConversationId &&
+      mergedConversations.some((c) => c.id === validated.activeConversationId)
+        ? validated.activeConversationId
+        : null;
+
     return {
-      conversations: validated.conversations,
-      activeConversationId: validated.activeConversationId,
+      conversations: mergedConversations,
+      activeConversationId: activeId,
     };
   } catch (err) {
     console.error("Failed to read from localStorage:", err);
-    return { conversations: [], activeConversationId: null };
+    return { conversations: preloaded, activeConversationId: null };
   }
 }
 
@@ -85,9 +105,9 @@ export function saveStoredConversations(
   if (typeof window === "undefined") return false;
 
   try {
-    // Only persist non-empty conversations or featured forks to avoid storage pollution and ghost chats
+    // Only persist non-empty conversations, featured forks, or preloaded chats
     const persistable = conversations.filter(
-      (c) => c.messages.length > 0 || c.isFeaturedFork === true
+      (c) => c.messages.length > 0 || c.isFeaturedFork === true || c.isPreloaded === true
     );
 
     const payload: ConversationStorageSchema = {

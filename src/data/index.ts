@@ -21,6 +21,7 @@ import type {
   EducationItem,
   FeaturedChatTemplate,
 } from "@/types/portfolio";
+import type { Conversation } from "@/types/chat";
 
 export const profile: Profile = profileJson as Profile;
 export const projects: Project[] = projectsJson as Project[];
@@ -49,4 +50,29 @@ export const featuredChatsMap: Record<string, FeaturedChatTemplate> = {
 
 export function getFeaturedChatById(id: string): FeaturedChatTemplate | undefined {
   return featuredChatsMap[id];
+}
+
+/**
+ * Creates canonical, preloaded portfolio conversations from the verified featured chat templates.
+ * These represent the source-controlled, immutable ground truth about Azeem Ahmad's work.
+ */
+export function createPreloadedConversations(): Conversation[] {
+  // Fixed baseline epoch to guarantee stable IDs and timestamps
+  const baseTimestamp = 1710000000000;
+
+  return featuredChats.map((template, idx) => ({
+    id: `preloaded-${template.id}`,
+    title: template.title,
+    createdAt: baseTimestamp + idx * 1000,
+    updatedAt: baseTimestamp + idx * 1000,
+    isFeaturedFork: true,
+    isPreloaded: true,
+    featuredTopicId: template.id,
+    messages: template.messages.map((m, mIdx) => ({
+      id: `${template.id}-msg-${mIdx + 1}`,
+      role: m.role,
+      content: m.content,
+      timestamp: baseTimestamp + idx * 1000 + (mIdx + 1) * 100,
+    })),
+  }));
 }

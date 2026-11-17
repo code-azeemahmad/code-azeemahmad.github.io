@@ -17,6 +17,7 @@ export interface Conversation {
   messages: ChatMessage[];
   isFeaturedFork?: boolean;
   featuredTopicId?: string;
+  isPreloaded?: boolean;
 }
 
 export interface ConversationStorageSchema {

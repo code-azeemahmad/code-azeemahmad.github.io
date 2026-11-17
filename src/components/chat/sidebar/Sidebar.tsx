@@ -267,11 +267,11 @@ export function Sidebar({
             <div>
               <div className="flex items-center justify-between px-2 py-1 text-[11px] font-medium tracking-wider uppercase text-muted">
                 <span>Chat History</span>
-                {conversations.length > 0 && (
+                {conversations.some((c) => !c.isPreloaded) && (
                   <button
                     onClick={() => setConfirmClearOpen(true)}
                     className="text-[10px] text-muted-soft hover:text-[#c64545] transition-colors cursor-pointer"
-                    title="Clear all conversations"
+                    title="Clear visitor conversations"
                   >
                     Clear
                   </button>
@@ -328,25 +328,35 @@ export function Sidebar({
                           <span className="truncate">{conv.title}</span>
                         </div>
 
-                        {/* Action buttons on hover */}
-                        <div className="hidden group-hover:flex items-center gap-1 shrink-0 bg-surface-card pl-1 rounded">
-                          <button
-                            onClick={(e) => handleStartRename(e, conv)}
-                            className="p-1 text-muted hover:text-ink transition-colors"
-                            title="Rename"
-                            aria-label={`Rename ${conv.title}`}
+                        {conv.isPreloaded ? (
+                          <span
+                            className="shrink-0 text-muted-soft/60 flex items-center pr-1"
+                            title="Preloaded portfolio chat (cannot be deleted)"
+                            aria-label="Preloaded portfolio chat"
                           >
-                            <Pencil className="h-3 w-3" />
-                          </button>
-                          <button
-                            onClick={(e) => handleDelete(e, conv.id)}
-                            className="p-1 text-muted hover:text-[#c64545] transition-colors"
-                            title="Delete"
-                            aria-label={`Delete ${conv.title}`}
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </button>
-                        </div>
+                            <Sparkles className="h-2.5 w-2.5 text-primary/70" />
+                          </span>
+                        ) : (
+                          /* Action buttons on hover for visitor chats */
+                          <div className="hidden group-hover:flex items-center gap-1 shrink-0 bg-surface-card pl-1 rounded">
+                            <button
+                              onClick={(e) => handleStartRename(e, conv)}
+                              className="p-1 text-muted hover:text-ink transition-colors"
+                              title="Rename"
+                              aria-label={`Rename ${conv.title}`}
+                            >
+                              <Pencil className="h-3 w-3" />
+                            </button>
+                            <button
+                              onClick={(e) => handleDelete(e, conv.id)}
+                              className="p-1 text-muted hover:text-[#c64545] transition-colors"
+                              title="Delete"
+                              aria-label={`Delete ${conv.title}`}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     );
                   })
@@ -444,8 +454,8 @@ export function Sidebar({
       <Dialog
         isOpen={confirmClearOpen}
         onClose={() => setConfirmClearOpen(false)}
-        title="Clear All Conversations"
-        description="Are you sure you want to remove all saved conversation history from your browser? This action cannot be undone."
+        title="Clear Visitor Chat History"
+        description="Are you sure you want to remove your custom conversation history from your browser? Preloaded portfolio conversations will remain available."
       >
         <div className="mt-4 flex justify-end gap-2.5">
           <Button
@@ -461,7 +471,7 @@ export function Sidebar({
               setConfirmClearOpen(false);
             }}
           >
-            Clear All History
+            Clear Visitor History
           </Button>
         </div>
       </Dialog>

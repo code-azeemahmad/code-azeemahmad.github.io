@@ -199,8 +199,8 @@ export function SettingsModal({
         {onClearHistory && (
           <div className="rounded-xl border border-hairline bg-canvas p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 transition-colors">
             <div>
-              <div className="text-xs font-medium text-ink">Local Conversation History</div>
-              <div className="text-[11px] text-muted">Stored in your browser's private storage</div>
+              <div className="text-xs font-medium text-ink">Visitor Conversation History</div>
+              <div className="text-[11px] text-muted">Clear custom chats (preloaded portfolio chats are preserved)</div>
             </div>
             <Button
               variant="outline"

@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { Conversation, ChatMessage } from "@/types/chat";
 import type { FeaturedChatTemplate } from "@/types/portfolio";
+import { createPreloadedConversations } from "@/data";
 import {
   loadStoredConversations,
   saveStoredConversations,
@@ -40,9 +41,9 @@ export function useConversationManager() {
   }, [conversations, activeConversationId]);
 
   const savedConversations = React.useMemo(() => {
-    // Only display conversations that have actual messages or are featured template forks
+    // Only display conversations that have actual messages, are featured template forks, or are preloaded
     return conversations.filter(
-      (c) => c.messages.length > 0 || c.isFeaturedFork
+      (c) => c.messages.length > 0 || c.isFeaturedFork || c.isPreloaded
     );
   }, [conversations]);
 
@@ -69,7 +70,12 @@ export function useConversationManager() {
     }
 
     const currentActive = conversations.find((c) => c.id === currentId);
-    if (currentActive && currentActive.messages.length === 0 && !currentActive.isFeaturedFork) {
+    if (
+      currentActive &&
+      currentActive.messages.length === 0 &&
+      !currentActive.isFeaturedFork &&
+      !currentActive.isPreloaded
+    ) {
       return currentId;
     }
 
@@ -77,17 +83,28 @@ export function useConversationManager() {
     activeConversationIdRef.current = null;
     setActiveConversationId(null);
     setConversations((prev) =>
-      prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork)
+      prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork || c.isPreloaded)
     );
     return null;
   }, [conversations]);
 
   /**
    * Idempotent Featured Template Fork handler:
-   * Reuses existing unmodified forks of the same template rather than creating duplicates.
+   * Reuses existing preloaded chats or unmodified forks rather than creating duplicates.
    */
   const forkFeaturedTemplate = React.useCallback(
     (template: FeaturedChatTemplate): string => {
+      // 1. If preloaded canonical template exists, select it directly
+      const preloaded = conversations.find(
+        (c) => c.featuredTopicId === template.id && c.isPreloaded
+      );
+      if (preloaded) {
+        activeConversationIdRef.current = preloaded.id;
+        setActiveConversationId(preloaded.id);
+        return preloaded.id;
+      }
+
+      // 2. Reuse active conversation if it matches this template
       const currentId = activeConversationIdRef.current;
       const currentActive = conversations.find((c) => c.id === currentId);
       if (
@@ -98,6 +115,7 @@ export function useConversationManager() {
         return currentActive.id;
       }
 
+      // 3. Reuse existing unmodified fork
       const existingFork = conversations.find(
         (c) =>
           c.featuredTopicId === template.id &&
@@ -131,7 +149,7 @@ export function useConversationManager() {
       setActiveConversationId(id);
       setConversations((prev) => [
         newConv,
-        ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
+        ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork || c.isPreloaded),
       ]);
       return id;
     },
@@ -151,7 +169,7 @@ export function useConversationManager() {
 
       setConversations((prev) =>
         prev.map((c) =>
-          c.id === id
+          c.id === id && !c.isPreloaded
             ? { ...c, title: trimmed, updatedAt: Date.now() }
             : c
         )
@@ -162,19 +180,33 @@ export function useConversationManager() {
 
   const deleteConversation = React.useCallback(
     (id: string) => {
-      setConversations((prev) => prev.filter((c) => c.id !== id));
+      setConversations((prev) => {
+        const target = prev.find((c) => c.id === id);
+        if (target?.isPreloaded) {
+          // Preloaded portfolio conversations cannot be deleted
+          return prev;
+        }
+        return prev.filter((c) => c.id !== id);
+      });
       if (activeConversationIdRef.current === id) {
-        activeConversationIdRef.current = null;
-        setActiveConversationId(null);
+        const target = conversations.find((c) => c.id === id);
+        if (!target?.isPreloaded) {
+          activeConversationIdRef.current = null;
+          setActiveConversationId(null);
+        }
       }
     },
-    []
+    [conversations]
   );
 
   const clearAllConversations = React.useCallback(() => {
     activeConversationIdRef.current = null;
     setActiveConversationId(null);
-    setConversations([]);
+    // Clear only visitor-created conversations; permanently preserve all preloaded portfolio conversations
+    setConversations((prev) => {
+      const preloadedOnly = prev.filter((c) => c.isPreloaded);
+      return preloadedOnly.length > 0 ? preloadedOnly : createPreloadedConversations();
+    });
   }, []);
 
   const addMessageToActive = React.useCallback(
@@ -187,6 +219,33 @@ export function useConversationManager() {
 
       // Determine or assign the active conversation ID atomically
       let targetConvId = activeConversationIdRef.current;
+
+      // RULE 8: Check if current active is a preloaded immutable conversation
+      const currentActive = conversations.find((c) => c.id === targetConvId);
+      if (currentActive && currentActive.isPreloaded) {
+        // Continuing a featured template creates a separate visitor-owned conversation
+        const forkConvId = `conv-${currentActive.featuredTopicId || "chat"}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+        activeConversationIdRef.current = forkConvId;
+        setActiveConversationId(forkConvId);
+
+        const forkedConv: Conversation = {
+          id: forkConvId,
+          title: currentActive.title,
+          createdAt: Date.now(),
+          updatedAt: Date.now(),
+          messages: [...currentActive.messages, newMsg],
+          isFeaturedFork: true,
+          isPreloaded: false,
+          featuredTopicId: currentActive.featuredTopicId,
+        };
+
+        setConversations((prev) => [
+          forkedConv,
+          ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork || c.isPreloaded),
+        ]);
+
+        return newMsg;
+      }
 
       if (!targetConvId) {
         targetConvId = `conv-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
@@ -229,17 +288,18 @@ export function useConversationManager() {
           createdAt: Date.now(),
           updatedAt: Date.now(),
           messages: [newMsg],
+          isPreloaded: false,
         };
 
         return [
           newConv,
-          ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork),
+          ...prev.filter((c) => c.messages.length > 0 || c.isFeaturedFork || c.isPreloaded),
         ];
       });
 
       return newMsg;
     },
-    []
+    [conversations]
   );
 
   const updateAssistantMessage = React.useCallback(

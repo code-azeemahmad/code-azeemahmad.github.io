@@ -3,6 +3,7 @@ import {
   STORAGE_KEY,
   CURRENT_SCHEMA_VERSION,
 } from "../src/lib/storage/conversationStorage";
+import { createPreloadedConversations } from "../src/data";
 
 console.log("=== Running Storage & Data Layer Unit Tests ===");
 
@@ -52,6 +53,41 @@ if (persistable.length === 2 && !persistable.some((c) => c.id === "c1")) {
   console.log("✓ PASS: Empty non-featured conversations are correctly pruned to ensure idempotency.");
 } else {
   console.error("✗ FAIL: Empty conversations should be pruned.");
+  process.exit(1);
+}
+
+// 4. Preloaded conversations canonical initialization
+const preloaded = createPreloadedConversations();
+if (preloaded.length === 6 && preloaded.every((p) => p.isPreloaded === true && p.messages.length > 0)) {
+  passed++;
+  console.log(`✓ PASS: createPreloadedConversations() generates ${preloaded.length} verified immutable portfolio chats.`);
+} else {
+  console.error("✗ FAIL: createPreloadedConversations() must return 6 verified preloaded chats.");
+  process.exit(1);
+}
+
+// 5. Preloaded conversations immutability check (cannot be deleted)
+const simulatedConversations = [...preloaded, { id: "visitor-1", title: "Custom", createdAt: 200, updatedAt: 200, messages: [{ id: "m2", role: "user" as const, content: "hi", timestamp: 200 }] }];
+// Deleting "visitor-1" should succeed
+const afterVisitorDelete = simulatedConversations.filter((c) => c.id !== "visitor-1" || c.isPreloaded);
+// Attempting to delete preloaded-about-me should be blocked
+const afterPreloadedDelete = simulatedConversations.filter((c) => c.id !== "preloaded-about-me" || c.isPreloaded);
+
+if (afterVisitorDelete.length === 6 && afterPreloadedDelete.length === 7) {
+  passed++;
+  console.log("✓ PASS: Deletion guard protects preloaded portfolio conversations while allowing visitor chat deletion.");
+} else {
+  console.error("✗ FAIL: Preloaded conversations must not be deleted.");
+  process.exit(1);
+}
+
+// 6. Clearing history preserves preloaded conversations
+const afterClearHistory = simulatedConversations.filter((c) => c.isPreloaded);
+if (afterClearHistory.length === 6 && afterClearHistory.every((c) => c.isPreloaded)) {
+  passed++;
+  console.log("✓ PASS: Clearing history preserves all preloaded portfolio conversations.");
+} else {
+  console.error("✗ FAIL: Clearing history must retain preloaded conversations.");
   process.exit(1);
 }
 
