@@ -361,9 +361,11 @@ export function Sidebar({
           {!isCollapsed ? (
             <div className="flex items-center justify-between rounded-lg bg-canvas p-2 border border-hairline">
               <div className="flex items-center gap-2 overflow-hidden">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-card text-primary font-semibold text-xs border border-hairline">
-                  AA
-                </div>
+                <img
+                  src="/azeempic.jpeg"
+                  alt="Azeem Ahmad"
+                  className="h-7 w-7 shrink-0 rounded-full object-cover border border-primary"
+                />
                 <div className="truncate">
                   <div className="text-xs font-medium text-ink truncate">
                     Azeem Ahmad
@@ -400,7 +402,13 @@ export function Sidebar({
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center gap-1">
+            <div className="flex flex-col items-center gap-1.5">
+              <img
+                src="/azeempic.jpeg"
+                alt="Azeem Ahmad"
+                className="h-7 w-7 shrink-0 rounded-full object-cover border border-primary mb-0.5"
+                title="Azeem Ahmad"
+              />
               {onToggleTheme && (
                 <Button
                   variant="ghost"

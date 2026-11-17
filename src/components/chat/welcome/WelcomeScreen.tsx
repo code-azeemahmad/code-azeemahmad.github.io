@@ -47,6 +47,16 @@ export interface WelcomeScreenProps {
 export function WelcomeScreen({ onSelectPrompt }: WelcomeScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-full my-auto px-3.5 sm:px-4 py-6 sm:py-8 max-w-3xl mx-auto w-full text-center">
+      {/* Profile Avatar */}
+      <div className="mb-4 sm:mb-5">
+        <img
+          src="/azeempic.jpeg"
+          alt="Azeem Ahmad"
+          className="h-20 w-20 sm:h-24 sm:w-24 rounded-full object-cover border-2 border-primary shadow-md"
+          loading="eager"
+        />
+      </div>
+
       {/* Main Editorial Headline */}
       <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-normal tracking-[-0.03em] text-ink leading-tight transition-colors">
         Hi, I'm <span className="text-primary">Azeem Ahmad</span>
